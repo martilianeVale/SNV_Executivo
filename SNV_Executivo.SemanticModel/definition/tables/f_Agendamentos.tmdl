@@ -1,0 +1,52 @@
+table f_Agendamentos
+	lineageTag: d06cf654-5c74-4d47-a93c-899b18ec4c29
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: d1805c28-5b8c-492f-b086-228f866b691d
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoUnidade
+		dataType: string
+		lineageTag: cd111016-3f29-4bef-8ab5-cb820f6eb2bd
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: cb4579a5-4263-4052-b7cf-a6cff22bbe24
+		summarizeBy: none
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bf95f8e0-a6a6-491d-954a-d005131c4525
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Agendamentos = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)#(tab)#(tab)Agendamento.CodigoLead#(lf)#(tab)#(tab),Unidade.CodigoUnidade#(lf)#(tab)#(tab),Lead.CodigoMidia#(lf)#(tab)#(tab),Agendamento.Date#(lf)#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_LeadEvento] as Agendamento#(lf)LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_LeadStatic] as Lead on Lead.CodigoLead = Agendamento.CodigoLead#(lf)LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_VwLeadUnidade] as Unidade on Unidade.CodigoLead = Agendamento.CodigoLead and Loja = 'Atual'#(lf)Where TipoEvento = 'Agendamento'#(lf)and Agendamento.Date>= '20240101'"]),
+				    #"Linhas Classificadas" = Table.Sort(Fonte,{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

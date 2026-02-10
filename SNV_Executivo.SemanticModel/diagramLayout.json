@@ -1,0 +1,503 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 2213.8058531858724,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "_Medidas",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 22,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 275.30004971691392,
+            "y": 122.68282835785502
+          },
+          "nodeIndex": "f_Deploy",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 21,
+          "expandedHeight": 286.77033469387766
+        },
+        {
+          "location": {
+            "x": 582.42431371240173,
+            "y": 250.25631383840295
+          },
+          "nodeIndex": "f_EventosRelevantes",
+          "nodeLineageTag": "d11805c7-42d6-4607-acc0-b8426797bf96",
+          "size": {
+            "height": 239.69377959183703,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 285.36564559411289,
+            "y": 265.49051315265643
+          },
+          "nodeIndex": "f_Metas",
+          "size": {
+            "height": 257.78622593590615,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 4127.5235825254995,
+            "y": 476.44952057695946
+          },
+          "nodeIndex": "f_Leads",
+          "nodeLineageTag": "3d56c015-9432-4a60-b386-96c696714726",
+          "size": {
+            "height": 228.10463060811128,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 2832.84664703677,
+            "y": 506.45604648902417
+          },
+          "nodeIndex": "d_Mídia",
+          "nodeLineageTag": "52289648-c466-442b-bb1e-7398ca452a51",
+          "size": {
+            "height": 210.38578799721404,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 889.06076256695246,
+            "y": 611.00179285032038
+          },
+          "nodeIndex": "d_InvestimentoPlanejado",
+          "size": {
+            "height": 231.5981773331265,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 2974.4232406968154,
+            "y": 0
+          },
+          "nodeIndex": "f_Vendas",
+          "nodeLineageTag": "3e9f1899-9e59-4f4b-bf20-8048b5ddf292",
+          "size": {
+            "height": 233.20121584155754,
+            "width": 231.9591836734694
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 1288.9735264587425,
+            "y": 1025.2312854966208
+          },
+          "nodeIndex": "d_Origem",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 625.70528495453254,
+            "y": 542.19119583852012
+          },
+          "nodeIndex": "f_InvestimentoRealizado",
+          "size": {
+            "height": 414.09555797869916,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 1683.5390455073882,
+            "y": 608.52198363601144
+          },
+          "nodeIndex": "f_Analytics",
+          "size": {
+            "height": 159.78906759221627,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 198.39530530312618
+          },
+          "nodeIndex": "d_OrigensGenéricas",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 18,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 297.65746174859311
+          },
+          "nodeIndex": "_Medidas_Análises",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 619.07214691106651
+          },
+          "nodeIndex": "_Medidas_Campanha",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1068.7564751233397
+          },
+          "nodeIndex": "d_SelectDays",
+          "size": {
+            "height": 135.27304734825111,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 951.79821935512518
+          },
+          "nodeIndex": "d_Atualização",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1943.9548905974907,
+            "y": 611.00606030636209
+          },
+          "nodeIndex": "f_Analytics_Monthly",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1692.2554771785171,
+            "y": 0
+          },
+          "nodeIndex": "d_Calendário",
+          "nodeLineageTag": "3e94da48-c834-4f35-a371-e2f202539d8f",
+          "size": {
+            "height": 437.96181403911959,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 3042.8400766852396,
+            "y": 214.96375675862816
+          },
+          "nodeIndex": "d_CalendárioApoio",
+          "nodeLineageTag": "8ae10075-3ca1-4dea-b067-219c30f66be8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 2181.6704362498895,
+            "y": 263.9409693441844
+          },
+          "nodeIndex": "f_QuantidadeLojas",
+          "nodeLineageTag": "ab1be9be-a667-461e-8d9b-f25c1fb864c9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 304.748082461867,
+            "y": 567.96977592216763
+          },
+          "nodeIndex": "d_Objetivo",
+          "nodeLineageTag": "20cca440-8dcd-4192-b504-b251bc4026df",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1094.01799533683,
+            "y": 0
+          },
+          "nodeIndex": "d_MetaBudget",
+          "nodeLineageTag": "524f07c8-2e1b-4475-a6ef-1a3b28530b52",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 3352.7416484424157,
+            "y": 0
+          },
+          "nodeIndex": "d_Lojas",
+          "nodeLineageTag": "76b0f93f-a898-45d0-b0ac-163efa8fa2f1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 3628.720612742467,
+            "y": 343.3807763236008
+          },
+          "nodeIndex": "f_LeadUnidade",
+          "nodeLineageTag": "f65dfcbb-f8eb-4a91-90cd-d4dee00597df",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 3086.5539356477393,
+            "y": 696.30634712134861
+          },
+          "nodeIndex": "d_Selection",
+          "nodeLineageTag": "3fc970b7-6666-4457-bd77-3622352a2fc2",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 2621.3892012725196,
+            "y": 0
+          },
+          "nodeIndex": "f_Agendamentos",
+          "nodeLineageTag": "d06cf654-5c74-4d47-a93c-899b18ec4c29",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 3393.0681718294077,
+            "y": 908.95845381976187
+          },
+          "nodeIndex": "f_Comparecimentos",
+          "nodeLineageTag": "17174875-21d5-4ff2-9c8b-2053fbc7b7cb",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 2199.5933958988367,
+            "y": 0
+          },
+          "nodeIndex": "f_StatusFichaVenda",
+          "nodeLineageTag": "3763d33f-7b9f-4c85-b795-15c1e636ac67",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 2802.6646080913633,
+            "y": 231.85682654438921
+          },
+          "nodeIndex": "d_TipoLead",
+          "nodeLineageTag": "c2f3b6d3-81b7-406e-9d3c-969d6fc2d2ae",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 3633.6439066060598,
+            "y": 0
+          },
+          "nodeIndex": "f_Base_Precificacao",
+          "nodeLineageTag": "2aeabbf9-48ba-4ded-80e8-8fc25f59261b",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 3654.5539356477393,
+            "y": 708.30634712134861
+          },
+          "nodeIndex": "z_De_Para_Modelo",
+          "nodeLineageTag": "36c702d6-4239-482b-879e-27e1bc682784",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 3319.3299796116912,
+            "y": 203.73430677869982
+          },
+          "nodeIndex": "d_VeículosModelos",
+          "nodeLineageTag": "6e7c6e05-2e71-458d-805b-87cb3eb4bbc2",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 4403.0230820586785,
+            "y": 482.009492888812
+          },
+          "nodeIndex": "d_CategoriaPrecificação",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 4787.0688402586984,
+            "y": 472.48789754285355
+          },
+          "nodeIndex": "d_CategoriaSimples",
+          "nodeLineageTag": "0943dd84-63fe-47e5-a6da-6d722a34c2af",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1996.3385538870107,
+            "y": 0
+          },
+          "nodeIndex": "d_MetaOrçamento",
+          "nodeLineageTag": "beb94359-a0df-4464-bc2d-61f5d2e412e8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 5071.0688402586984,
+            "y": 548.61564274831039
+          },
+          "nodeIndex": "d_SelectionFunil",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 4429.9209810775465,
+            "y": 723.53732810704093
+          },
+          "nodeIndex": "f_LeadFaixaPrecoMinimo",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 4087.2102028520339,
+            "y": 853.47810644621165
+          },
+          "nodeIndex": "f_LeadFaixaPrecoChamada",
+          "nodeLineageTag": "189d5d3d-cc3f-434b-9b5f-27983a62b097",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 62.336089590424194,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

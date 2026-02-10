@@ -1,0 +1,147 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "aa23d39d3658dad8db0c",
+  "position": {
+    "x": 14.431916738941892,
+    "y": 35.52471812662619,
+    "z": 1000,
+    "height": 210.928013876843,
+    "width": 133.21769297484823,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Leads",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#252423"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Qualificados",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#252423"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Agendamento",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#252423"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Comparecimento",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Venda+VNF",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#252423"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Venda",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "1a07093e75761fe22f65"
+}

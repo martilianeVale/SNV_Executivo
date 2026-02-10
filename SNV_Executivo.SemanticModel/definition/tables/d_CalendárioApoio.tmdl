@@ -1,0 +1,173 @@
+table d_CalendárioApoio
+	lineageTag: 8ae10075-3ca1-4dea-b067-219c30f66be8
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 6ac4e8bd-09d0-47aa-b894-49c2e3663c0b
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 756d2936-8e39-4a2d-9f11-3a7fdc7eea3d
+			defaultHierarchy: LocalDateTable_3561fc87-7b77-416e-8afc-4e3d62b53e4b.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aff4005-c098-493a-951b-c55d2f89ae9a
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: d8c544c9-c9f1-4f03-aa02-a25e1fa82518
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês.Nome'
+		dataType: string
+		lineageTag: 5782d901-33bd-4a2a-8dec-fe3f4eb810f3
+		summarizeBy: none
+		sourceColumn: Mês.Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semana
+		dataType: string
+		lineageTag: 01621ac2-1dfe-40a4-948a-f729f48f0e9c
+		summarizeBy: none
+		sourceColumn: Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column mesAno
+		dataType: string
+		lineageTag: a2bcbfcb-90a7-4858-8d3f-62ef17f4ee20
+		summarizeBy: none
+		sourceColumn: mesAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column anoMes
+		dataType: string
+		lineageTag: d480320d-1869-472d-9acf-6e22eec46d1f
+		summarizeBy: none
+		sourceColumn: anoMes
+
+		annotation SummarizationSetBy = Automatic
+
+	column SemanaOrFDS
+		dataType: string
+		lineageTag: 1bfe860d-2256-4aeb-8c42-a9f443660fc8
+		summarizeBy: none
+		sourceColumn: SemanaOrFDS
+
+		annotation SummarizationSetBy = Automatic
+
+	column semanaDeAté
+		dataType: string
+		lineageTag: 282cccd3-62ab-4c11-8a88-52c3ceb3a360
+		summarizeBy: none
+		sourceColumn: semanaDeAté
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDateOrdem
+		dataType: int64
+		formatString: 0
+		lineageTag: 86186784-d498-415f-ae9a-9e07c7a182fb
+		summarizeBy: sum
+		sourceColumn: SDateOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDate
+		dataType: string
+		lineageTag: 6ebf6ff4-6ac8-4296-bb32-e2d03bfd6d2a
+		summarizeBy: none
+		sourceColumn: SDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaUtil
+		dataType: int64
+		formatString: 0
+		lineageTag: a8f13cdd-8cc1-4d6e-b52a-5eca1395b971
+		summarizeBy: sum
+		sourceColumn: DiaUtil
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Sem.'
+		dataType: string
+		lineageTag: 68be2a1c-4112-42cf-9ad1-8b26b9c36e4e
+		summarizeBy: none
+		sourceColumn: Dia Sem.
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = ```
+			
+			
+			VAR endActualPeriod = MAX(f_Leads[Date])
+			VAR yearActualMonth = YEAR(endActualPeriod)
+			VAR monthActualMonth = MONTH(endActualPeriod)
+			VAR actualDay = DAY(endActualPeriod)
+			
+			VAR beginActualPeriod = DATE( yearActualMonth, monthActualMonth, 01)
+			VAR beginLastPeriod = EOMONTH( endActualPeriod,-2 )+1
+			VAR yearLastPeriod = YEAR( beginLastPeriod )
+			VAR monthLastPeriod = MONTH( beginLastPeriod )
+			
+			
+			VAR exactSameDayOnLastPeriod= DATE( yearLastPeriod, monthLastPeriod, actualDay )
+			
+			VAR endLastMonth = EOMONTH(beginLastPeriod,0)
+			
+			VAR endLastPeriod = IF(
+			    EOMONTH(endActualPeriod,0)=endActualPeriod,
+			    endLastMonth,
+			    exactSameDayOnLastPeriod
+			)
+			
+			RETURN 
+			    IF(
+			        'd_CalendárioApoio'[Date]>=beginActualPeriod && 'd_CalendárioApoio'[Date]<=endActualPeriod,
+			        "Atual",
+			        IF(
+			            'd_CalendárioApoio'[Date]>=beginLastPeriod && 'd_CalendárioApoio'[Date]<=endLastPeriod,
+			            "Anterior"
+			        )
+			    )
+			```
+		lineageTag: 990897ac-84f4-4efa-9092-81ad896c99df
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_CalendárioApoio-f4838ea8-ab61-4e8f-9588-4fd706e602ce = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT                  [Date],#(lf)#(tab)#(tab)#(tab)[Ano],#(lf)#(tab)#(tab)#(tab)[Mês],#(lf)#(tab)#(tab)#(tab)[Mês.Nome],#(lf)#(tab)#(tab)#(tab)[Semana],#(lf)#(tab)#(tab)#(tab)[mesAno],#(lf)#(tab)#(tab)#(tab)[anoMes],#(lf)#(tab)#(tab)#(tab)[Dia Sem] as [Dia Sem.],#(lf)#(tab)#(tab)#(tab)[SemanaOrFDS],#(lf)#(tab)#(tab)#(tab)[semanaDeAté],#(lf)#(tab)#(tab)#(tab)[SDateOrdem],#(lf)#(tab)#(tab)#(tab)[SDate],#(lf)#(tab)#(tab)#(tab)[DiaUtil]#(lf)FROM [MKT_Warehouse].[dbo].[SNV_d_Calendario]#(lf)Where Date >= '20240101'"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}, {"Ano", Int64.Type}, {"Mês", Int64.Type}, {"Mês.Nome", type text}, {"Semana", type text}, {"mesAno", type text}, {"anoMes", type text}, {"Dia Sem.", type text}, {"SemanaOrFDS", type text}, {"semanaDeAté", type text}, {"SDateOrdem", Int64.Type}, {"SDate", type text}, {"DiaUtil", Int64.Type}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

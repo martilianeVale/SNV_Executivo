@@ -1,0 +1,36 @@
+table d_CategoriaPrecificação
+	lineageTag: c0815881-cd88-4bc3-8ebb-9f69d781d419
+
+	column ChaveModelo
+		dataType: string
+		lineageTag: 3a9f6d2e-4703-4563-8130-6d6865fc31b4
+		summarizeBy: none
+		sourceColumn: ChaveModelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORIA
+		dataType: string
+		lineageTag: 8f551822-db2f-4e7d-bb2d-01d4b2a76341
+		summarizeBy: none
+		sourceColumn: CATEGORIA
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_CategoriaPrecificação = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT#(lf)    Distinct (ChaveModelo)#(lf)    ,CATEGORIA#(lf)FROM#(lf)(SELECT#(lf)    Distinct CATEGORIA, CONCAT (FIPE, LEFT(MODELO,8)) as ChaveModelo#(lf)    FROM [MKT_Warehouse].[dbo].[SNV_f_Precificacao]#(lf)    WHERE CATEGORIA not in ('-', '')#(lf)) as D#(lf)GROUP BY#(lf)    ChaveModelo#(lf)    ,CATEGORIA"]),
+				    #"Linhas Classificadas" = Table.Sort(Fonte,{{"ChaveModelo", Order.Descending}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Linhas Classificadas",{{"CATEGORIA", Text.Proper, type text}, {"ChaveModelo", Text.Proper, type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula1" = Table.TransformColumns(#"Colocar Cada Palavra Em Maiúscula",{{"CATEGORIA", Text.Proper, type text}}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Colocar Cada Palavra Em Maiúscula1")
+				in
+				    #"Duplicatas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,84 @@
+table d_MetaBudget
+	lineageTag: 524f07c8-2e1b-4475-a6ef-1a3b28530b52
+
+	column BU
+		dataType: string
+		lineageTag: 3d87db41-4775-4d98-bfb9-ec243473ef05
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invest Planejado'
+		dataType: double
+		lineageTag: 80c9837a-405d-4206-8bac-fa441cd877bc
+		summarizeBy: sum
+		sourceColumn: Invest Planejado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Meta Vendas'
+		dataType: int64
+		formatString: 0
+		lineageTag: 278b018e-b5fd-47c6-94f1-df6ba34ce17f
+		summarizeBy: sum
+		sourceColumn: Meta Vendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Leads
+		dataType: double
+		formatString: 0
+		lineageTag: 0250403d-cb92-4755-a2bb-6818ac44b9f6
+		summarizeBy: sum
+		sourceColumn: Leads
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tx Conv'
+		dataType: double
+		lineageTag: 8512ddb7-a533-4d3a-a18c-478149564f1c
+		summarizeBy: sum
+		sourceColumn: Tx Conv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CPL
+		dataType: double
+		lineageTag: ed671df0-defe-478c-b141-a1c9a8e3480b
+		summarizeBy: sum
+		sourceColumn: CPL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MesAno
+		dataType: string
+		lineageTag: 468ce0e0-ca1c-40b4-b88f-2ea5c375417c
+		summarizeBy: none
+		sourceColumn: MesAno
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_MetaBudget = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT       [BU]#(lf)            ,[Invest Planejado]#(lf)            ,[Meta Vendas]#(lf)            ,[Leads]#(lf)            ,[Tx Conv]#(lf)            ,Format (Cast (Mês as date), 'MM/yyyy') as MesAno#(lf)            ,[CPL]#(lf)FROM [MKT_Warehouse].[dbo].[INS_d_MetaBudget]#(lf)Where BU = 'SNV'"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"CPL", type number}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"MesAno", Order.Descending}})
+				
+				
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,1531 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "7358574b0624d45232cb",
+  "position": {
+    "x": 9.7153700189753316,
+    "y": 204.02277039848198,
+    "z": 5000,
+    "height": 114.9652118912081,
+    "width": 1259.7596457938014,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "d_Calendário"
+                    }
+                  },
+                  "Property": "Periodo"
+                }
+              },
+              "queryRef": "Calendario.Periodo",
+              "displayName": "Período"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Investimento Planejado ( Executivo | Total Mês| N,n )"
+                }
+              },
+              "queryRef": "_Medidas.Investimento Planejado ( Executivo | Total Mês| N,n )",
+              "nativeQueryRef": "Invest. Plan Mês",
+              "displayName": "Invest. Plan Mês"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Investimento Planejado ( Executivo | Período 1 | N,n )"
+                }
+              },
+              "queryRef": "_Medidas.Investimento Planejado ( Executivo | Período 1 | N,n )",
+              "nativeQueryRef": "Invest. Plan D-1",
+              "displayName": "Invest. Plan D-1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Investimento Realizado ( Total | Período 1 | N,n )"
+                }
+              },
+              "queryRef": "_Medidas.Investimento Realizado ( Total | Período 1 | N,n )",
+              "displayName": "Invest. Real"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Dif. Invest. ( Real vs Planejado )"
+                }
+              },
+              "queryRef": "_Medidas.Dif. Invest. ( Real vs Planejado )",
+              "nativeQueryRef": "Dif Custo",
+              "displayName": "Dif Custo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Leads ( Projetado | Intervalo | N )"
+                }
+              },
+              "queryRef": "_Medidas.Leads ( Projetado | Intervalo | N )",
+              "displayName": "Leads Proj."
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Leads ( Total | Período | N )"
+                }
+              },
+              "queryRef": "_Medidas.Leads",
+              "displayName": "Leads"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "CPL ( Total | Período 1 | N,n )"
+                }
+              },
+              "queryRef": "_Medidas.CPL",
+              "displayName": "CPL"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Usuários ( Total | Período 1 | N )"
+                }
+              },
+              "queryRef": "_Medidas.Usuários ( Total | Período 1 | N )",
+              "displayName": "Usuários"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Conversão ( Site | Período 1 | % )"
+                }
+              },
+              "queryRef": "_Medidas.Tx. Conv. Site2",
+              "displayName": "Tx. Conv. Site"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Conversão ( Usuarios | Período 1 | % )"
+                }
+              },
+              "queryRef": "_Medidas.Conversão ( Usuarios | Período 1 | % )",
+              "nativeQueryRef": "Tx. Conv Usuários",
+              "displayName": "Tx. Conv Usuários"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Venda ( Total | Período 1 | N )"
+                }
+              },
+              "queryRef": "_Medidas.Venda ( Total | Período 1 | N )",
+              "nativeQueryRef": "Vendas",
+              "displayName": "Vendas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Conversão ( Vendas | Período 1 | % )"
+                }
+              },
+              "queryRef": "_Medidas.Tx de Conversão",
+              "displayName": "Tx Conv. Vendas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Venda ( Projetada | Período 1 | N )"
+                }
+              },
+              "queryRef": "_Medidas.Venda ( Projetada | Período 1 | N )",
+              "displayName": "Proj. Venda"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Meta Executiva ( Venda | Periodo | N )"
+                }
+              },
+              "queryRef": "_Medidas.Meta Executiva ( Venda | Periodo | N )",
+              "nativeQueryRef": "Meta Venda",
+              "displayName": "Meta Venda"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Ticket Médio ( Total | Período 1 | N,n )"
+                }
+              },
+              "queryRef": "_Medidas.Tx. Conv. Site 2",
+              "displayName": "Ticket Médio (Vendas)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "d_Calendário"
+                  }
+                },
+                "Property": "Periodo"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "'10'"
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E7E7E7'"
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "'12'"
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#ED1C24'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Base Leads.Leads"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.CPL"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Base Leads.Tx de Conversão"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Custo.Impressions)"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Custo.Clicks)"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Base Leads.Vendas Estimadas"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx de Conversão"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx. Conv. Site 2"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx. Conv. Site2"
+          }
+        },
+        {
+          "properties": {
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Investimento Realizado ( Total | Período 1 | N,n )"
+          }
+        },
+        {
+          "properties": {
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads ( Projetado | Intervalo | N )"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Venda ( Projetada | Período 1 | N )"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Usuários ( Total | Período 1 | N )"
+          }
+        },
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Conversão ( Usuarios | Período 1 | % )"
+          }
+        },
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Dif. Invest. ( Real vs Planejado )"
+          }
+        },
+        {
+          "properties": {
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Investimento Planejado ( Executivo | Total Mês| N,n )"
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "115.20482833502248D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Base Leads.Tx de Conversão"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "116.53013372041748D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Base Leads.Vendas Estimadas"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "107.16822073174137D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx de Conversão"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "83.6692114020563D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.CPL"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "84.02312650601442D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "92.57830140804751D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Custo.Clicks)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "87.58096490643342D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Calendario.Date"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "83.891564871535D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(Custo.Impressions)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "167.23982017698714D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx. Conv. Site 2"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "106.95382124420426D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Tx. Conv. Site2"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "92.28840300508226D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Calendario.Periodo"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "121.96220807961957D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Investimento Realizado ( Total | Período 1 | N,n )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "71.76270334008893D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads ( Projetado | Intervalo | N )"
+          }
+        },
+        {
+          "properties": {},
+          "selector": {
+            "metadata": "_Medidas.Venda ( Projetada | Período 1 | N )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "90.8576760777031D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Meta Executiva ( Venda | Periodo | N )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "99.45136016761694D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Investimento Planejado ( Executivo | Período 1 | N,n )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "81.72043627559928D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Dif. Invest. ( Real vs Planejado )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "95.74958341060021D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Usuários ( Total | Período 1 | N )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "125.2292674596984D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Investimento Planejado ( Executivo | Total Mês| N,n )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "110.66540692414195D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Conversão ( Usuarios | Período 1 | % )"
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "'10'"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "_Medidas"
+                                    }
+                                  },
+                                  "Property": "Dif. Invest. ( Real vs Planejado )"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#ED1C24'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Medidas.Dif. Invest. ( Real vs Planejado )"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'AlternatingRows'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter",
+        "ordinal": 0,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "loginValidation"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter7ec0b653a610e38a58ea",
+        "ordinal": 1,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "CPA ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterba2183c210691012c8bb",
+        "ordinal": 2,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "CPL ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter322dd737a163b3a0dd00",
+        "ordinal": 3,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "d_InvestimentoPlanejado"
+                  }
+                },
+                "Property": "Cost"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter3ae197c2c8a036a4292a",
+        "ordinal": 4,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Leads ( Total | Período | N )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterd9a9dda764008a0b5521",
+        "ordinal": 5,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Margem"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterf7b994ce34a4939b0cd4",
+        "ordinal": 6,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "d_Calendário"
+              }
+            },
+            "Property": "Periodo"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "d_Calendário",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "Periodo"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Filter7656a150b71d5790e78d",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "ROI"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter0a11fd8bd2735e1a5c87",
+        "ordinal": 8,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Conversão ( Vendas | Período 1 | % )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter0b1d9094bb2015e6025a",
+        "ordinal": 9,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Dif. Invest. ( Real vs Planejado )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter0be885fe395ce8841e76",
+        "ordinal": 10,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "CTR"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterd9d2b56b4a58a39039ce",
+        "ordinal": 11,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Clicks ( Total | Período 1 | N )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterf68c3c140c22ad963b98",
+        "ordinal": 12,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Impressão ( Total | Período 1 | N )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter4a065149a9ae8b784830",
+        "ordinal": 13,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Meta ( Venda | Periodo | N )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter8ace10f12d1c5b190065",
+        "ordinal": 14,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "f_Vendas"
+                  }
+                },
+                "Property": "Venda"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter6866467026007671b925",
+        "ordinal": 15,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "f_Vendas"
+                  }
+                },
+                "Property": "Receita"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter3cc2613825011a91851e",
+        "ordinal": 16,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Ticket Médio ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter00e0ecd68a0badc2139b",
+        "ordinal": 17,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Conversão ( Site | Período 1 | % )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter097b519feb0cc2e0c0da",
+        "ordinal": 18,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "CPC"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filterd69ae1cd9424e53297e9",
+        "ordinal": 19,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Investimento Realizado ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter21694c89c60135b69c02",
+        "ordinal": 20,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Investimento Projetado ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter54cf6d9c015a77e56cd0",
+        "ordinal": 21,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Leads ( Projetado | Intervalo | N )"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter137830bcd2aa6e731390",
+        "ordinal": 22,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Investimento Planejado ( Total | Período 1 | N,n )"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

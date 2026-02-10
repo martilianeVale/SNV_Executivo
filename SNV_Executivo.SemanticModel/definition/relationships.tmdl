@@ -1,0 +1,256 @@
+relationship c8fe1e0c-33b0-4d69-bfee-702077fe7593
+	toCardinality: many
+	fromColumn: f_InvestimentoRealizado.Origem
+	toColumn: d_Origem.Origem
+
+relationship 01a45c08-21cd-45c1-ba2f-f945e0a4eb3f
+	toCardinality: many
+	fromColumn: d_Origem.Mídia
+	toColumn: d_Mídia.Mídia
+
+relationship c67af80b-ebcf-4aff-82f3-864aa1e20209
+	toCardinality: many
+	fromColumn: f_Analytics_Monthly.origem
+	toColumn: d_Origem.Mídia
+
+relationship 5b05e5a4-b761-49f6-a571-f54ef7d5ff80
+	toCardinality: many
+	fromColumn: f_Analytics.origem
+	toColumn: d_Origem.Mídia
+
+relationship 9675442e-6f57-45ed-925a-874c9236ebce
+	toCardinality: many
+	fromColumn: f_Vendas.CodigoMidia
+	toColumn: d_Origem.CodigoMidia
+
+relationship ed90e454-26f3-4ec1-b760-aab3461c07c2
+	toCardinality: many
+	fromColumn: f_Leads.CodigoMidia
+	toColumn: d_Origem.CodigoMidia
+
+relationship 185d8610-6873-4966-b4fe-c16346262a2f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Calendário.Date
+	toColumn: LocalDateTable_7c65c731-b396-4b83-8129-66cc82d23e59.Date
+
+relationship 756d2936-8e39-4a2d-9f11-3a7fdc7eea3d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_CalendárioApoio.Date
+	toColumn: LocalDateTable_3561fc87-7b77-416e-8afc-4e3d62b53e4b.Date
+
+relationship d119296d-bc88-4a5b-820a-5ed6d3627f2b
+	fromColumn: f_EventosRelevantes.Data
+	toColumn: d_Calendário.Date
+
+relationship 5b50f38d-3af8-4426-b530-cfd91616e439
+	fromColumn: f_Deploy.Data
+	toColumn: d_Calendário.Date
+
+relationship 014622cb-b7be-496e-9dc5-2f6c40a3469e
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Calendário.mesAno
+	toColumn: f_Metas.Mês
+
+relationship 5aa4c9db-ad2d-434b-96de-5f93bbc19bdb
+	fromColumn: f_InvestimentoRealizado.Date
+	toColumn: d_Calendário.Date
+
+relationship 38d3400e-70a1-44c6-a9fa-15b0cfdf9fb4
+	isActive: false
+	fromColumn: d_InvestimentoPlanejado.Date
+	toColumn: d_Calendário.Date
+
+relationship db89a12f-9d39-4d19-93bf-30e6517b79fc
+	isActive: false
+	fromColumn: f_Leads.Date
+	toColumn: d_Calendário.Date
+
+relationship 042b25cc-2a28-4529-8082-1f7e23d3fefa
+	isActive: false
+	fromColumn: f_Vendas.Date
+	toColumn: d_Calendário.Date
+
+relationship a4709fa8-b6e6-400e-bc73-c6ef94c488ca
+	fromColumn: f_Analytics.date
+	toColumn: d_Calendário.Date
+
+relationship 3508f0e0-69af-4acd-977f-d1bd4dfbccbb
+	toCardinality: many
+	fromColumn: f_Analytics_Monthly.mesAno
+	toColumn: d_Calendário.mesAno
+
+relationship c5939e49-de31-4a03-92e6-b9a4b6386d7a
+	isActive: false
+	fromColumn: f_Leads.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship 7283dce2-84a7-41b8-8b10-7840154e928a
+	isActive: false
+	fromColumn: d_InvestimentoPlanejado.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship d331b24b-5583-4a10-98d7-5f4acc61c63d
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: d_Calendário.mesAno
+	toColumn: f_QuantidadeLojas.mesAno
+
+relationship ad8a5832-3ca8-490b-e7ba-109c75c4b1ae
+	fromColumn: f_InvestimentoRealizado.Objetivo
+	toColumn: d_Objetivo.Sigla
+
+relationship 1ebb6409-616e-c0f2-b472-317b6fbc8818
+	isActive: false
+	fromColumn: f_StatusFichaVenda.Date
+	toColumn: d_Calendário.Date
+
+relationship aa8d9aee-ec3c-23d0-4d26-4373091655e2
+	isActive: false
+	fromColumn: f_Agendamentos.Date
+	toColumn: d_Calendário.Date
+
+relationship 2fd22c87-9e5a-b9ae-4196-627d2993d88b
+	isActive: false
+	fromColumn: f_Comparecimentos.Date
+	toColumn: d_Calendário.Date
+
+relationship 5c60e858-945f-e7e7-ee96-b3349e98a58c
+	isActive: false
+	fromColumn: f_Comparecimentos.CodigoLead
+	toColumn: d_TipoLead.CodigoLead
+
+relationship 7a7564f7-b949-c21e-a243-f6176a4bb989
+	isActive: false
+	fromColumn: f_Agendamentos.CodigoLead
+	toColumn: d_TipoLead.CodigoLead
+
+relationship 753b6b94-a326-89b8-628a-1627e7fbca4e
+	isActive: false
+	fromColumn: f_Agendamentos.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship 0f40a937-b1d3-395c-2389-e92940a16eac
+	isActive: false
+	fromColumn: f_Comparecimentos.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship e9f12fa4-4a36-ebd7-3c55-bebb708abc69
+	isActive: false
+	fromColumn: f_Vendas.CodigoLead
+	toColumn: d_TipoLead.CodigoLead
+
+relationship b21fb3f0-4139-dfc9-fc74-66e1ddb2a1e1
+	isActive: false
+	fromColumn: f_StatusFichaVenda.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship a880f653-6d80-3a05-1042-efbc4fe18d97
+	fromColumn: f_Base_Precificacao.DATA
+	toColumn: d_Calendário.Date
+
+relationship 08e4cef1-5814-2174-81e6-b0cd8cbf4443
+	toCardinality: many
+	fromColumn: f_Leads.CodigoModelo
+	toColumn: d_VeículosModelos.CodigoModelo
+
+relationship aa7fad01-0bf4-6b95-9356-af089a42b26c
+	fromColumn: f_Base_Precificacao.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship e2aeb914-de34-057b-cad4-4406f95ea096
+	fromColumn: f_LeadUnidade.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship 2a066e64-3178-86fb-fbdc-b85510374f32
+	fromColumn: f_Leads.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship 1bc19bac-bbfa-9b9d-000d-9090aa857180
+	fromColumn: f_Comparecimentos.CodigoMidia
+	toColumn: d_Mídia.CodigoMidia
+
+relationship 2b15aab1-5b0f-e416-44fa-55025f48c988
+	fromColumn: f_Agendamentos.CodigoMidia
+	toColumn: d_Mídia.CodigoMidia
+
+relationship db696ddc-3179-ff38-969d-7b324293067f
+	fromColumn: f_Vendas.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship 19488b8b-71ea-26d5-8e36-dd026e65fdcc
+	isActive: false
+	fromColumn: f_Vendas.Date
+	toColumn: d_CalendárioApoio.Date
+
+relationship b73159c3-3b62-9cd3-4763-20add62a432f
+	toCardinality: many
+	fromColumn: f_Vendas.CodigoModelo
+	toColumn: d_VeículosModelos.CodigoModelo
+
+relationship 1d9a9d4c-99ed-b474-11b7-cf9cc55081c5
+	toCardinality: many
+	fromColumn: f_Base_Precificacao.ChaveModelo
+	toColumn: d_CategoriaPrecificação.ChaveModelo
+
+relationship 04e5cfcf-075b-1617-8589-9bd90e7dc90e
+	toCardinality: many
+	fromColumn: f_Leads.CodigoLead
+	toColumn: f_LeadFaixaPrecoMinimo.CodigoLead
+
+relationship 99198434-183d-bc5a-f117-266121d7e2c4
+	isActive: false
+	fromColumn: d_Calendário.anoMes
+	toColumn: d_MetaOrçamento.MesAno
+
+relationship c239eb94-dba1-7c9f-221f-45092fec9da3
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Calendário.mesAno
+	toColumn: d_MetaOrçamento.MesAno
+
+relationship 3df54793-2476-4004-8263-fb510cf10460
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Atualização.d_Atualização
+	toColumn: LocalDateTable_1194f7d8-af4d-4aa7-9180-1ed2059227de.Date
+
+relationship 6b59ccda-a0d8-d4c4-aa9c-4cc42e2ff070
+	fromColumn: f_Agendamentos.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship fb888eb7-36ba-9eae-f4a8-e6efda769c90
+	fromColumn: f_Comparecimentos.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship 2e712102-ce2c-e12b-ad74-2d96cdfbd732
+	fromColumn: f_StatusFichaVenda.CodigoUnidade
+	toColumn: d_Lojas.CodigoUnidade
+
+relationship ba8e9b8c-9cbd-4b84-a071-ae14dc8352a0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_LeadFaixaPrecoMinimo.DataLead
+	toColumn: LocalDateTable_fde03d2b-af4c-4ea4-bdde-f2b83380df39.Date
+
+relationship 21ac93c1-66c8-393d-7ac0-0bed45b475a4
+	toCardinality: many
+	fromColumn: f_Leads.CodigoLead
+	toColumn: f_LeadFaixaPrecoChamada.CodigoLead
+
+relationship 8caebf95-5f27-477f-8d23-e87d14a7c548
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_LeadFaixaPrecoMinimo.DataMaximaPrecificacao
+	toColumn: LocalDateTable_34eedf04-2c4b-4d5e-9dea-ab23e7580ea0.Date
+
+relationship 7e213209-3d4a-9655-3576-0be6b19d5c4d
+	toCardinality: many
+	fromColumn: d_InvestimentoPlanejado.Origem
+	toColumn: d_Origem.Origem
+
+relationship 0b9dde00-e480-49ae-e7b6-eb999baa08d0
+	fromColumn: d_CategoriaPrecificação.CATEGORIA
+	toColumn: d_CategoriaSimples.Categoria
+
+relationship 7b08d606-6c40-d768-0aba-9cfeb3f11d85
+	toCardinality: many
+	fromColumn: d_MetaBudget.MesAno
+	toColumn: d_Calendário.mesAno
+

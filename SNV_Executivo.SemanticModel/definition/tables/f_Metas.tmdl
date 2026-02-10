@@ -1,0 +1,67 @@
+table f_Metas
+	lineageTag: 0fa7e8be-deb3-45c6-aa28-5c4a357f2103
+
+	column MetaConversão
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4ff3ce54-c657-4ab0-86e7-417eebac2797
+		summarizeBy: none
+		sourceColumn: MetaConversão
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetaCPL
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 1888d1f5-782b-4199-9821-bc4cb1c3c693
+		summarizeBy: none
+		sourceColumn: MetaCPL
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column '%Margem contábil'
+		dataType: double
+		lineageTag: c49f4797-d5a1-4221-9a38-86cb8834160e
+		summarizeBy: none
+		sourceColumn: %Margem contábil
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mês
+		dataType: string
+		lineageTag: a562fd98-09fb-4d63-95d0-6b0bf88d95b8
+		summarizeBy: none
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column MetaVendas
+		dataType: int64
+		formatString: 0
+		lineageTag: 76b17cfe-c929-4120-b9de-5e490a5a4632
+		summarizeBy: none
+		sourceColumn: MetaVendas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Metas-f51d4c93-62cd-43f3-bec9-3889eb42a916 = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT      #(lf)                        [mesAno] as Mês,#(lf)#(tab)#(tab)#(tab)[MetaConversão],#(lf)#(tab)#(tab)#(tab)[MetaCPL],#(lf)#(tab)#(tab)#(tab)[%Margem contábil],#(lf)#(tab)#(tab)#(tab)[MetaVendas]#(lf)FROM [MKT_Warehouse].[dbo].[SNV_d_Metas]#(lf)"])
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

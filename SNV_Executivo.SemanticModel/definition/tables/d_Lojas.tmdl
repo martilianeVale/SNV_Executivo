@@ -1,0 +1,66 @@
+table d_Lojas
+	lineageTag: 76b0f93f-a898-45d0-b0ac-163efa8fa2f1
+
+	column CodigoUnidade
+		dataType: int64
+		formatString: 0
+		lineageTag: a143afa2-859e-4f44-aab1-face7fea4fff
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cidade
+		dataType: string
+		lineageTag: f9bef730-eb3d-4938-adf7-beb475e8a4e5
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: 3efb6d56-2ef3-45f0-961e-26e64be72c24
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Regional
+		dataType: string
+		lineageTag: efbba4ba-33fa-4e51-97e5-1871b8cfdaaa
+		summarizeBy: none
+		sourceColumn: Regional
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diretoria
+		dataType: string
+		lineageTag: 85dddd3b-27c3-42c4-8d95-0dad06a69a90
+		summarizeBy: none
+		sourceColumn: Diretoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loja
+		dataType: string
+		lineageTag: eb42f7ad-73c3-453b-a991-1bf392979198
+		summarizeBy: none
+		sourceColumn: Loja
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Lojas = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)             CodigoUnidade#(lf)            ,Estado#(lf)            ,Regional#(lf)            ,Diretoria#(lf)            ,Case when Loja = 'Sn Penha (RJ)' then 'Sn Penha' #(lf)                when Loja = 'Sn Belém 2 Híbrida' then 'Sn Belém Híbrida' else Loja end as Loja#(lf)            ,Case when Cidade = 'Sao Paulo' then 'São Paulo'#(lf)                when Cidade = 'Sao Luis' then 'São Luis' else Cidade end as Cidade#(lf)FROM [MKT_Warehouse].[dbo].[SNV_d_Lojas]#(lf)Where [Loja Original] not like '%RAC%' and [Loja Original] not in ('Shopping Butantã')#(lf)"]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"Regional", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

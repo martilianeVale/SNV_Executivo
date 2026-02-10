@@ -1,0 +1,246 @@
+table d_Calendário
+	lineageTag: 3e94da48-c834-4f35-a371-e2f202539d8f
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 557d7b0a-8df1-457b-be4e-fc4b3214e17b
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 185d8610-6873-4966-b4fe-c16346262a2f
+			defaultHierarchy: LocalDateTable_7c65c731-b396-4b83-8129-66cc82d23e59.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: ce999a28-ecd1-4e2a-a2a0-2881d805e8f8
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b4622c4-2d8c-432a-bff0-2612c5bcec95
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês.Nome'
+		dataType: string
+		lineageTag: 67382a3d-a61f-4302-b117-9dd03aaade82
+		summarizeBy: none
+		sourceColumn: Mês.Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semana
+		dataType: string
+		lineageTag: fdb1600e-4d3e-4ff7-b777-afdfcc4d4fbe
+		summarizeBy: none
+		sourceColumn: Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column mesAno
+		dataType: string
+		lineageTag: 188b04b1-da41-44ac-bc9a-cacd66b9c340
+		summarizeBy: none
+		sourceColumn: mesAno
+		sortByColumn: Ano
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column anoMes
+		dataType: string
+		lineageTag: bbeb93f6-7c8b-4f57-9cfb-07d8f66f15d1
+		summarizeBy: none
+		sourceColumn: anoMes
+		sortByColumn: Ano
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SemanaOrFDS
+		dataType: string
+		lineageTag: 04e72158-311b-4b9a-a79d-4ca18b34cb8c
+		summarizeBy: none
+		sourceColumn: SemanaOrFDS
+
+		annotation SummarizationSetBy = Automatic
+
+	column semanaDeAté
+		dataType: string
+		lineageTag: 8d8e77d1-a1e9-4f1e-81fb-8b58a69a2504
+		summarizeBy: none
+		sourceColumn: semanaDeAté
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDateOrdem
+		dataType: int64
+		formatString: 0
+		lineageTag: 61a8faab-738d-4fde-a1db-18767226a512
+		summarizeBy: sum
+		sourceColumn: SDateOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	column SDate
+		dataType: string
+		lineageTag: 58c5591d-1aa8-4d99-9826-96e4988a7a55
+		summarizeBy: none
+		sourceColumn: SDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaUtil
+		dataType: int64
+		formatString: 0
+		lineageTag: e8f3ae1f-7513-4f1a-aaa6-7dcac945bc36
+		summarizeBy: sum
+		sourceColumn: DiaUtil
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = ```
+			
+			
+			VAR endActualPeriod = MAX(f_Leads[Date])
+			VAR yearActualMonth = YEAR(endActualPeriod)
+			VAR monthActualMonth = MONTH(endActualPeriod)
+			VAR actualDay = DAY(endActualPeriod)
+			
+			VAR beginActualPeriod = DATE( yearActualMonth, monthActualMonth, 01)
+			VAR beginLastPeriod = EOMONTH( endActualPeriod,-2 )+1
+			VAR yearLastPeriod = YEAR( beginLastPeriod )
+			VAR monthLastPeriod = MONTH( beginLastPeriod )
+			
+			
+			VAR exactSameDayOnLastPeriod= DATE( yearLastPeriod, monthLastPeriod, actualDay )
+			
+			VAR endLastMonth = EOMONTH(beginLastPeriod,0)
+			
+			VAR endLastPeriod = IF(
+			    EOMONTH(endActualPeriod,0)=endActualPeriod,
+			    endLastMonth,
+			    exactSameDayOnLastPeriod
+			)
+			
+			RETURN 
+			    IF(
+			        'd_Calendário'[Date]>=beginActualPeriod && 'd_Calendário'[Date]<=endActualPeriod,
+			        "Atual",
+			        IF(
+			            'd_Calendário'[Date]>=beginLastPeriod && 'd_Calendário'[Date]<=endLastPeriod,
+			            "Anterior"
+			        )
+			    )
+			```
+		lineageTag: 8448118a-4b6c-458c-a6db-c7b1b2f5eb58
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Periodo Campanha' =
+			
+			/*
+			VAR beginActualPeriod = DATE(2022,03,18)
+			VAR endActualPeriod = DATE(2022,03,31)
+			
+			VAR beginLastPeriod = DATE(2022,02,DAY(beginActualPeriod))
+			VAR endLastPeriod = DATE(2022,02, DAY(endActualPeriod))
+			
+			RETURN
+			    IF(
+			        Calendario[Date]>=beginActualPeriod && Calendario[Date]<=endActualPeriod,
+			        "Campanha",
+			        IF(
+			            Calendario[Date]>=beginLastPeriod && Calendario[Date]<=endLastPeriod,
+			            "Pré Campanha"
+			        )
+			    )*/
+			
+			
+			VAR beginActualPeriod = DATE(2022,05,14)
+			VAR endActualPeriod = DATE(2022,05, 31)
+			
+			VAR beginLastPeriod = DATE(2022,04, 13)
+			VAR endLastPeriod = DATE(2022,04,30)
+			
+			VAR beginLastPeriodLY = beginActualPeriod-365
+			VAR endLastPeriodLY = endActualPeriod-365
+			
+			RETURN IF(
+			    'd_Calendário'[Date]>=beginActualPeriod && 'd_Calendário'[Date]<=endActualPeriod,
+			    "Campanha",
+			    IF(
+			        'd_Calendário'[Date]>=beginLastPeriod && 'd_Calendário'[Date]<=endLastPeriod,
+			        "Pré Campanha",
+			        IF(
+			            'd_Calendário'[Date]>=beginLastPeriodLY && 'd_Calendário'[Date]<=endLastPeriodLY,
+			            "Pré Campanha (LY)"
+			        )
+			    )
+			)
+		lineageTag: f442f003-c5a6-4bf1-9bb4-4d532ce78581
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Periodo Controle' = ```
+			
+			
+			VAR beginActualPeriod = DATE(2022,04,01)
+			VAR endActualPeriod = DATE(2022,04,30)
+			
+			RETURN
+			    IF(
+			        'd_Calendário'[Date]>=beginActualPeriod && 'd_Calendário'[Date]<=endActualPeriod,
+			        IF( 'd_Calendário'[Dia Sem.]="sáb" || 'd_Calendário'[Dia Sem.]="dom" || 'd_Calendário'[Date]=DATE(2022,02,28),
+			            "Controle FDS",
+			            "Controle DU"
+			        )  
+			    )
+			```
+		lineageTag: adfe4030-d688-4e16-b4e2-68fec545577e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Sem.'
+		dataType: string
+		lineageTag: c7adefac-d0e4-4cd1-adc0-4bc8d44727f0
+		summarizeBy: none
+		sourceColumn: Dia Sem.
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Calendário-83eb7b0e-b591-429f-8050-3347cc8a28e0 = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT                  [Date],#(lf)#(tab)#(tab)#(tab)[Ano],#(lf)#(tab)#(tab)#(tab)[Mês],#(lf)#(tab)#(tab)#(tab)[Mês.Nome],#(lf)#(tab)#(tab)#(tab)[Semana],#(lf)#(tab)#(tab)#(tab)[mesAno],#(lf)#(tab)#(tab)#(tab)[anoMes],#(lf)#(tab)#(tab)#(tab)[Dia Sem] as [Dia Sem.],#(lf)#(tab)#(tab)#(tab)[SemanaOrFDS],#(lf)#(tab)#(tab)#(tab)[semanaDeAté],#(lf)#(tab)#(tab)#(tab)[SDateOrdem],#(lf)#(tab)#(tab)#(tab)[SDate],#(lf)#(tab)#(tab)#(tab)[DiaUtil]#(lf)FROM [MKT_Warehouse].[dbo].[SNV_d_Calendario]#(lf)Where Date >= '20240101'"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}, {"Ano", Int64.Type}, {"Mês", Int64.Type}, {"Mês.Nome", type text}, {"Semana", type text}, {"mesAno", type text}, {"anoMes", type text}, {"Dia Sem.", type text}, {"SemanaOrFDS", type text}, {"semanaDeAté", type text}, {"SDateOrdem", Int64.Type}, {"SDate", type text}, {"DiaUtil", Int64.Type}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [Date] < Date.From(DateTime.LocalNow())),
+				    #"Linhas Classificadas" = Table.Sort(#"Linhas Filtradas",{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

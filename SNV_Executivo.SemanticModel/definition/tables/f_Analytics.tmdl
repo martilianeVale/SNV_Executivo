@@ -1,0 +1,49 @@
+table f_Analytics
+	lineageTag: 7422a90d-516a-482f-94a2-988be8bab5bf
+
+	column date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f062b8bd-6453-44b2-9042-128e0bb14b29
+		summarizeBy: none
+		sourceColumn: date
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column users
+		dataType: int64
+		formatString: 0
+		lineageTag: 94bc6827-9720-45b6-981c-73c80fc9a31a
+		summarizeBy: sum
+		sourceColumn: users
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem
+		dataType: string
+		lineageTag: 9654f4ca-951e-40ca-a0df-a33251a1c2e0
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Analytics-392e27c2-32f0-4de3-a6ff-2d4fb6499f4f = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="#(lf)SELECT#(lf)        date#(lf)        ,users#(lf)        ,origem#(lf)FROM [MKT_Warehouse].[dbo].[INS_f_UserDaily]#(lf)WHERE BU = 'SNV'#(lf)and origem not in ('Blog', 'Atacado', 'Outros')#(lf)and date >= '20240101'#(lf)ORDER BY date DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"date", type date}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Tipo Alterado","Site","Site Unidas",Replacer.ReplaceValue,{"origem"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","LP Inauguração Santo André","LP Inauguração Loja",Replacer.ReplaceText,{"origem"})
+				in
+				    #"Valor Substituído1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

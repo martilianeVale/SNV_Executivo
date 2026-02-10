@@ -1,0 +1,40 @@
+table d_SelectionFunil
+	lineageTag: 38f777fd-c9c4-4327-b3c4-b34594797de3
+
+	column Selection
+		dataType: string
+		lineageTag: e29d1579-e5a8-48af-a87a-7b4b20b7e971
+		summarizeBy: none
+		sourceColumn: Selection
+
+		annotation SummarizationSetBy = Automatic
+
+	column Option
+		dataType: string
+		lineageTag: ae8adadf-befc-46b7-8391-b52d13346a55
+		summarizeBy: none
+		sourceColumn: Option
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: string
+		lineageTag: 3ff1ed39-61f9-4124-abbc-c86602ca5651
+		summarizeBy: none
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_SelectionFunil = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcs7PK0lMT81V0lFyzslMzStJLVY4PCsvMzm/GChUChFTitVBURlYmphXkpmSmJKqEJJfkpgDFCqEMGJjAQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Selection = _t, Option = _t, Value = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Selection", type text}, {"Option", type text}, {"Value", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

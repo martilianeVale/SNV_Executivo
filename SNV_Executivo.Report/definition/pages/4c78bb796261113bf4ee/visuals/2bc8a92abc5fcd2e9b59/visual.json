@@ -1,0 +1,384 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "2bc8a92abc5fcd2e9b59",
+  "position": {
+    "x": 0,
+    "y": 102.01138519924099,
+    "z": 12000,
+    "height": 589.39911448450346,
+    "width": 1264.6173308032892,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "d_Calendário"
+                    }
+                  },
+                  "Property": "mesAno"
+                }
+              },
+              "queryRef": "d_Calendário.mesAno",
+              "nativeQueryRef": "Mês/Ano",
+              "active": true,
+              "displayName": "Mês/Ano"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "d_VeículosModelos"
+                    }
+                  },
+                  "Property": "Modelo"
+                }
+              },
+              "queryRef": "d_VeículosModelos.Modelo",
+              "nativeQueryRef": "Modelo",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Ticket Médio ( Preço Chamada | Período | N,n )"
+                }
+              },
+              "queryRef": "_Medidas.Ticket Médio ( Preço Chamada | Período | N,n )",
+              "nativeQueryRef": "Ticket Médio (Preço Chamada)",
+              "displayName": "Ticket Médio (Preço Chamada)"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "f_Base_Precificacao"
+                        }
+                      },
+                      "Property": "MÍNIMO"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Sum(f_Base_Precificacao.MÍNIMO)",
+              "nativeQueryRef": "Mínimo de MÍNIMO",
+              "displayName": "Preço Mínimo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Volume Estoque ( Placas | Período | N )"
+                }
+              },
+              "queryRef": "_Medidas.Volume Estoque ( Placas | Período | N )",
+              "nativeQueryRef": "Estoque",
+              "displayName": "Estoque"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Leads ( Total | Período | N )"
+                }
+              },
+              "queryRef": "_Medidas.Leads ( Total | Período | N )",
+              "nativeQueryRef": "Leads",
+              "displayName": "Leads"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Venda ( Total | Período 1 | N )"
+                }
+              },
+              "queryRef": "_Medidas.Venda ( Total | Período 1 | N )",
+              "nativeQueryRef": "Vendas",
+              "displayName": "Vendas"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "Leads ( Total | Período | N )"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "d_VeículosModelos.Modelo"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "101.96265589454536D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Ticket Médio ( Preço Chamada | Período | N,n )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "104.95021371710914D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(f_Base_Precificacao.MÍNIMO)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "47.98755186721992D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads ( Total | Período | N )"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "295.2499988166086D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "d_VeículosModelos.Modelo"
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Ticket Médio ( Preço Chamada | Período | N,n )"
+          }
+        },
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auto'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(f_Base_Precificacao.MÍNIMO)"
+          }
+        },
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Leads ( Total | Período | N )"
+          }
+        },
+        {
+          "properties": {
+            "styleHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "styleTotal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Venda ( Total | Período 1 | N )"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "15436d2f63df57acbf85",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "d_VeículosModelos"
+              }
+            },
+            "Property": "Modelo"
+          }
+        },
+        "type": "Categorical",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

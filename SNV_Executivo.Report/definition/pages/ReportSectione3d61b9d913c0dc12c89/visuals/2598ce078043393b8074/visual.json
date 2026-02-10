@@ -1,0 +1,135 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "2598ce078043393b8074",
+  "position": {
+    "x": 0,
+    "y": 690.024174053183,
+    "z": 0,
+    "height": 29.911361804995973,
+    "width": 1280,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Desenvolvido por Marketing - Mídia e BI Unidas - Data da última atualização: ",
+                    "textStyle": {
+                      "color": "#ffffff"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "Valor"
+                      }
+                    },
+                    "textStyle": {
+                      "color": "#ffffff"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Medidas",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "lastAtt"
+                                },
+                                "Name": "Calendario.Data atualização"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "Calendario.Data atualização"
+                    }
+                  },
+                  "Function": 3
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Valor",
+                      "utterance": "data atualização"
+                    }
+                  }
+                }
+              }
+            },
+            "formatString": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dd/MM/yyyy'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Valor"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#005B9E'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

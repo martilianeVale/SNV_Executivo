@@ -1,0 +1,997 @@
+table _Medidas_Campanha
+	lineageTag: ff19044b-aef0-4a14-b147-8ed5c2fcc277
+
+	measure '(Campanha) CPA' =
+			CALCULATE(
+			    [CPA ( Total | Período 1 | N,n )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0.00
+		lineageTag: 1dd1e840-9e21-47ec-a8ef-eebe052b1175
+
+		changedProperty = FormatString
+
+	measure '(Campanha) CPA Pré Campanha' =
+			CALCULATE(
+			    [CPA ( Total | Período 1 | N,n )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0.00
+		lineageTag: cb238832-ae06-4bd0-8339-283b1fbf6ddf
+
+		changedProperty = FormatString
+
+	measure '(Campanha) CPL Campanha' =
+			CALCULATE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0.00
+		lineageTag: 347d40ec-e6cb-43d0-8fed-5865f909d85f
+
+		changedProperty = FormatString
+
+	measure '(Campanha) CPL Pré Campanha' =
+			CALCULATE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0.00
+		lineageTag: e798725a-5104-4c4d-bd68-1948a1ffc6bb
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Impressão Campanha' =
+			CALCULATE(
+			    [Impressão ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 72394a97-067b-43ef-947d-2ddb9b2020e4
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Impressao Pré Campanha' =
+			CALCULATE(
+			    [Impressão ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 75fc1ba3-aebd-4405-9b63-e7a7d109fba2
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Leads Campanha' =
+			CALCULATE(
+			    [Leads ( Total | Período | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 2a5fdfd2-c6f7-4ea7-9fcc-cfdde56a6eaf
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Leads Pré Campanha' =
+			CALCULATE(
+			    [Leads ( Total | Período | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 951ec2b4-cfe5-4e61-9610-70e3ccf7fdd9
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Novos Usuários Campanha' =
+			CALCULATE(
+			    [Novos Usuários],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 2bd76b15-0ba4-4abb-9814-bb942f3087e0
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Novos Usuários Pré Campanha' =
+			CALCULATE(
+			    [Novos Usuários],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 4d2f475d-69ef-476e-bdbf-f5e48ca882bb
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Sessões Campanha' =
+			CALCULATE(
+			    [Sessões ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: d167332b-9f67-43e6-b148-ad42c7ccbfa6
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Sessões Pré Campanha' =
+			CALCULATE(
+			    [Sessões ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: ca1b8dbd-70c5-49ed-b2ed-cc626dccdf32
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Usuários Campanha' =
+			CALCULATE(
+			    [Usuários ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 857c22f7-d8ae-450e-a59f-69799dfaf05f
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Usuários Pré Campanha' =
+			CALCULATE(
+			    [Usuários ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 1d446686-b6ef-4075-af67-23352455abfb
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Vendas Campanha' =
+			CALCULATE(
+			    [Venda ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 9e1aeb3b-3008-4983-84cc-fd0d149e7240
+
+		changedProperty = FormatString
+
+	measure '(Campanha) Vendas Pré Campanha' =
+			CALCULATE(
+			    [Venda ( Total | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo Campanha]="Pré Campanha"
+			    )
+			)
+		formatString: #,0
+		lineageTag: b44391b8-7b12-4e4d-9394-9a13712b6af8
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Clicks vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Clicks ( Total | Período 1 | N )],
+			    CALCULATE(
+			        [Clicks ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: bb8b5c01-1096-456d-8f6b-e8a14e3b6503
+
+		changedProperty = FormatString
+
+	measure 'Dif ( CPA vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [CPA ( Total | Período 1 | N,n )],
+			    CALCULATE(
+			        [CPA ( Total | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 907a2a9e-9a0b-4761-902e-78f3f05ba06b
+
+		changedProperty = FormatString
+
+	measure 'Dif ( CPL vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    CALCULATE(
+			        [CPL ( Total | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 81231c04-587a-4d17-b749-249658c919d7
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Impressão vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Impressão ( Total | Período 1 | N )],
+			    CALCULATE(
+			        [Impressão ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 3de2a498-ae04-4862-b0c5-22aaf13e4a64
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Leads vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    CALCULATE(
+			        [Leads ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 06317be4-7b07-4ef9-b514-51654fd29e64
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Novos Usuários vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Novos Usuários],
+			    CALCULATE(
+			        [Novos Usuários ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 835909cc-d0ad-497e-ad10-aa29b5b13193
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Receita Média vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Receita ( Total | Período 1 | N,n )],
+			    CALCULATE(
+			        [Receita ( Média diária | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: adb7fa6d-f6d2-435a-94df-6b6a49b3531c
+
+		changedProperty = FormatString
+
+	measure 'Dif ( ROI vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			VAR Margem = CALCULATE(
+			        [Receita ( Total | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    )*0.3460
+			
+			VAR CustoPerformance = CALCULATE(
+			        _Medidas[Investimento Realizado ( Total | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    )
+			
+			RETURN DIVIDE(
+			    [ROI],
+			    DIVIDE((Margem-CustoPerformance),CustoPerformance,0),
+			    0
+			)-1
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: a3f85423-8d40-4e1f-b1d1-40bc030ad762
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Sessões vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Sessões ( Total | Período 1 | N )],
+			    CALCULATE(
+			        [Sessões ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 9390117c-0b8c-48e4-92b2-7e73d727bb7b
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Ticket M. vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Ticket Médio ( Total | Período 1 | N,n )],
+			    CALCULATE(
+			        [Ticket Médio ( Total | Período 1 | N,n )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 0565c051-e42e-4de4-95ff-ab1b530a2517
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Tx Conv. Site vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Conversão ( Site | Período 1 | % )],
+			    CALCULATE(
+			        [Conversão ( Site | Período 1 | % )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: c2207586-bf75-436d-984c-52a9bc0640e4
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Tx Conv. Vendas vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Conversão ( Vendas | Período 1 | % )],
+			    CALCULATE(
+			        [Conversão ( Vendas | Período 1 | % )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 50d30924-27bf-4eee-b799-78345cada5d9
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Usuários vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Usuários ( Total | Período 1 | N )],
+			    CALCULATE(
+			        [Usuários ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: f86e40c0-137f-41ba-944a-151046f0a3cb
+
+		changedProperty = FormatString
+
+	measure 'Dif ( Venda vs Controle )' =
+			
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			VAR ControlPeriod = IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+			
+			RETURN DIVIDE(
+			    [Venda ( Total | Período 1 | N )],
+			    CALCULATE(
+			        [Venda ( Média diária )],
+			        FILTER(
+			            ALL('d_Calendário'),
+			            'd_Calendário'[Periodo Controle]=ControlPeriod
+			        )
+			    ),
+			    0
+			)-1
+		formatString: 0%;-0%;0%
+		lineageTag: 2e6aced8-ac94-4f6c-8078-0df5b3bc1253
+
+		changedProperty = FormatString
+
+	measure 'Dif. CPA ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) CPA],
+			        CALCULATE(
+			            [CPA ( Total | Período 1 | N,n )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3f85815c-fc96-448a-844f-9a8e5fab2c9e
+
+		changedProperty = FormatString
+
+	measure 'Dif. CPA ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) CPA]-
+			    CALCULATE(
+			        [CPA ( Total | Período 1 | N,n )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		lineageTag: 87083416-5f46-4a48-8e5d-42fc0c790b19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dif. CPA ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) CPA],
+			    [(Campanha) CPA Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c1fb3448-07ed-4bdc-a348-b0e6a51b7214
+
+		changedProperty = FormatString
+
+	measure 'Dif. CPA ( Campanha vs Pré Campanha | N )' = [(Campanha) CPA] - [(Campanha) CPA Pré Campanha]
+		lineageTag: 1902b651-70ea-4f65-99ca-7445a3c44454
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dif. CPL ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) CPL Campanha],
+			        CALCULATE(
+			            [CPL ( Total | Período 1 | N,n )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1236ea42-1ab7-4712-85ce-3687e5d88086
+
+		changedProperty = FormatString
+
+	measure 'Dif. CPL ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) CPL Campanha]-
+			    CALCULATE(
+			        [CPL ( Total | Período 1 | N,n )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		lineageTag: 1f688b77-3ed9-430b-94ff-53274e029c5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dif. CPL ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) CPL Campanha],
+			    [(Campanha) CPL Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7cde819c-03e9-4c6f-a387-bf65fb50d536
+
+		changedProperty = FormatString
+
+	measure 'Dif. CPL ( Campanha vs Pré Campanha | N )' = [(Campanha) CPL Campanha]-[(Campanha) CPL Pré Campanha]
+		lineageTag: 56f81e03-2bc0-497c-85bd-4524c9a8466c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dif. Impressões ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) Impressão Campanha],
+			        CALCULATE(
+			            [Impressão ( Total | Período 1 | N )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 006a7c2e-5ab7-40ba-bd3b-55adf02de0b4
+
+		changedProperty = FormatString
+
+	measure 'Dif. Impressões ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) Impressão Campanha]-
+			    CALCULATE(
+			        [Impressão ( Total | Período 1 | N )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: 72524f65-9035-4767-8014-96050bd304c7
+
+		changedProperty = FormatString
+
+	measure 'Dif. Impressões ( Campanha vs Pré Campanha | N )' = [(Campanha) Impressão Campanha] - [(Campanha) Impressao Pré Campanha]
+		formatString: #,0
+		lineageTag: 435180ee-121a-4d21-8120-ac25f2234d02
+
+		changedProperty = FormatString
+
+	measure 'Dif. Impressões ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) Impressão Campanha],
+			    [(Campanha) Impressao Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 231493cd-5ac9-4324-92b9-03d0ba596156
+
+		changedProperty = FormatString
+
+	measure 'Dif. Leads ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) Leads Campanha],
+			        CALCULATE(
+			            [Leads ( Total | Período | N )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: faffae40-1072-43c0-9a20-a6a5baa61ae6
+
+		changedProperty = FormatString
+
+	measure 'Dif. Leads ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) Leads Campanha]-
+			    CALCULATE(
+			        [Leads ( Total | Período | N )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: 20b7a0fc-6a4e-4365-b82d-7100c9c05de5
+
+		changedProperty = FormatString
+
+	measure 'Dif. Leads ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) Leads Campanha],
+			    [(Campanha) Leads Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c1623bf2-66f9-488a-838c-412f24fd0ded
+
+		changedProperty = FormatString
+
+	measure 'Dif. Leads ( Campanha vs Pré Campanha | N )' = [(Campanha) Leads Campanha]-[(Campanha) Leads Pré Campanha]
+		formatString: #,0
+		lineageTag: 1393b7bd-d8aa-49c5-92fe-e99a08b129aa
+
+		changedProperty = FormatString
+
+	measure 'Dif. Sessões ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) Sessões Campanha],
+			        CALCULATE(
+			            [Sessões ( Total | Período 1 | N )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b307b1c4-fc88-4a02-8b37-45fb2e58b8ca
+
+		changedProperty = FormatString
+
+	measure 'Dif. Sessões ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) Sessões Campanha]-
+			    CALCULATE(
+			        [Sessões ( Total | Período 1 | N )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: d91d8470-d411-4e23-b846-3d4f290f17d6
+
+		changedProperty = FormatString
+
+	measure 'Dif. Sessões ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) Sessões Campanha],
+			    [(Campanha) Sessões Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 904a2e4d-e9f6-44f6-8f69-6c8c02262ee7
+
+		changedProperty = FormatString
+
+	measure 'Dif. Sessões ( Campanha vs Pré Campanha | N )' = [(Campanha) Sessões Campanha] - [(Campanha) Sessões Pré Campanha]
+		formatString: #,0
+		lineageTag: 98a9ab49-c390-4d7c-800d-42b92b83188a
+
+		changedProperty = FormatString
+
+	measure 'Dif. Usuários ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) Usuários Campanha],
+			        CALCULATE(
+			            [Usuários ( Total | Período 1 | N )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 24c3678f-a887-421f-85d7-289d478190d4
+
+		changedProperty = FormatString
+
+	measure 'Dif. Usuários ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) Usuários Campanha]-
+			    CALCULATE(
+			        [Usuários ( Total | Período 1 | N )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: 96cd7503-d468-4fe0-894e-709e1967ac42
+
+		changedProperty = FormatString
+
+	measure 'Dif. Usuários ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) Usuários Campanha],
+			    [(Campanha) Usuários Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 638022fe-9a4f-4677-934d-924f1f165faa
+
+		changedProperty = FormatString
+
+	measure 'Dif. Usuários ( Campanha vs Pré Campanha | N )' = [(Campanha) Usuários Campanha] - [(Campanha) Usuários Pré Campanha]
+		formatString: #,0
+		lineageTag: 31d82366-63c8-4724-9bbd-6ccf6de0ad63
+
+		changedProperty = FormatString
+
+	measure 'Dif. Vendas ( Campanha vs Pré Campanha (LY) | % )' = ```
+			
+			    DIVIDE(
+			        [(Campanha) Vendas Campanha],
+			        CALCULATE(
+			            [Venda ( Total | Período 1 | N )],
+			            FILTER(
+			                'd_Calendário',
+			                'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			            )
+			        ),
+			        0
+			    )-1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 003b8a37-b9e1-4a62-96b3-3916fd5816d1
+
+		changedProperty = FormatString
+
+	measure 'Dif. Vendas ( Campanha vs Pré Campanha (LY) | N )' = ```
+			
+			    [(Campanha) Vendas Campanha]-
+			    CALCULATE(
+			        [Venda ( Total | Período 1 | N )],
+			        FILTER(
+			            'd_Calendário',
+			            'd_Calendário'[Periodo Campanha]="Pré Campanha (LY)"
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: aad5be6a-afe5-46ca-b285-2260a5ee63f1
+
+		changedProperty = FormatString
+
+	measure 'Dif. Vendas ( Campanha vs Pré Campanha | % )' =
+			DIVIDE(
+			    [(Campanha) Vendas Campanha],
+			    [(Campanha) Vendas Pré Campanha],
+			    0
+			)-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 33f405a0-1683-4085-99ed-3454f1327243
+
+		changedProperty = FormatString
+
+	measure 'Dif. Vendas ( Campanha vs Pré Campanha | N )' = [(Campanha) Vendas Campanha]-[(Campanha) Vendas Pré Campanha]
+		formatString: #,0
+		lineageTag: 3c945532-78ef-4243-bfb9-7659eee58b99
+
+		changedProperty = FormatString
+
+	measure 'Período Controle Campanha ( Intervalo | Período 1 | Controle FDS or DU )' =
+			
+			VAR selectedDay = MAX('d_Calendário'[Dia Sem.])
+			RETURN IF(
+			    selectedDay = "dom" || selectedDay = "sáb",
+			    "Controle FDS",
+			    "Controle DU"
+			)
+		lineageTag: 2447f6b6-c6ab-4774-80c6-17f7b495a844
+
+	measure 'Novos Usuários' = SUM(f_Analytics[New users])
+		formatString: #,0
+		lineageTag: d5e582d4-5380-4d53-aa86-201ab3de19fd
+
+		changedProperty = FormatString
+
+	measure 'Novos Usuários ( Média diária )' =
+			DIVIDE(
+			    _Medidas_Campanha[Novos Usuários],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		lineageTag: e761522d-a841-4188-8e75-7cf919929dd1
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: fe4f6b72-8258-4d31-ba88-bc587d5115f3
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas_Campanha-8316c7ef-15df-4af1-8c8d-fd52894be5de = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

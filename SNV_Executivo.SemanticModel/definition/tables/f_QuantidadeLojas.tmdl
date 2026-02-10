@@ -1,0 +1,33 @@
+table f_QuantidadeLojas
+	lineageTag: ab1be9be-a667-461e-8d9b-f25c1fb864c9
+
+	column mesAno
+		dataType: string
+		lineageTag: aa81f088-1c19-48dc-81d2-3292c590ea71
+		summarizeBy: none
+		sourceColumn: mesAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e60bd7c-5c04-40f5-a522-601a4c49d5cd
+		summarizeBy: none
+		sourceColumn: Quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_QuantidadeLojas = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT  *#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_QuantidadeLojas]"])
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

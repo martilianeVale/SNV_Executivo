@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "1ebfb554f05841bc0314",
+  "position": {
+    "x": 0,
+    "y": 660.24896265560176,
+    "z": 12000,
+    "height": 31.369294605809131,
+    "width": 639.33609958506224,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Popular: Mobi, Kwid, Argo; Médio: Polo, HB20, Onix; SUV/Executivo: BMW, Creta, Pulse; Pesado: Strada, Amarok,L200",
+                    "textStyle": {
+                      "fontSize": "9pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

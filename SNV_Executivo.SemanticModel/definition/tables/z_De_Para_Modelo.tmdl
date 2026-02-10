@@ -1,0 +1,33 @@
+table z_De_Para_Modelo
+	lineageTag: 36c702d6-4239-482b-879e-27e1bc682784
+
+	column Modelo
+		dataType: string
+		lineageTag: 3fccbbf2-32bf-4202-945d-d70b08abff8d
+		summarizeBy: none
+		sourceColumn: Modelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 6003c4d8-c9ab-4aac-8321-c063de6e1e0f
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition z_De_Para_Modelo = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("jc/bboIwAAbgV/nTa+1qLeotolHjiYiaJYQLJ9WQADXQMvZIew5fTDRbQtRsPsD3H3yfOAIzZdKjxFqmoUz3EnMNThnECZy1OmjCXmEwJg3SpvA2W7xhWMq90VGhSNDwyfiDsxyOSg4q0/D0V3zLaNHOT4ZVy+AU8/N3GL1Iu3/SEm4mk8gksOuo94tgb9YPcLUrBJxCQ5S8dtS6Qy+ddWOTV8Xs/7VRbEp4nwJeVlzXdmO0n3ejP5ssIN7FQ0h/uRgtMeUWY9VwC9ytMGcVvjUKClfmu1DlJAgu", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Modelo = _t, Categoria = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Modelo", type text}, {"Categoria", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

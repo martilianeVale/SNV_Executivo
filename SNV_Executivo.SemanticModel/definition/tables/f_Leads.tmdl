@@ -1,0 +1,73 @@
+table f_Leads
+	lineageTag: 3d56c015-9432-4a60-b386-96c696714726
+
+	column Date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: ee4ecc69-7a97-446d-9e0d-950fa072edc3
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b5cdf54-a59f-4098-956d-15bdc2ad59ca
+		summarizeBy: none
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: 80dbc140-d1ab-4d6d-aea7-53eab413faf2
+		summarizeBy: none
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoModelo
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f7318d2-1c26-46d6-be52-d6fd1ae2e15c
+		summarizeBy: none
+		sourceColumn: CodigoModelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoUnidade
+		dataType: string
+		lineageTag: b73025c5-193e-4056-b244-2c3d5c7babbc
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Qualificação
+		dataType: string
+		lineageTag: e29dbc0d-eb20-4d56-b693-510939037133
+		summarizeBy: none
+		sourceColumn: Qualificação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Leads-e7f13b97-5e1f-437c-8105-eb9c9b7bd678 = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="#(lf)SELECT #(lf)     Lead.[Date]#(lf)#(tab),Lead.CodigoLead#(lf)#(tab),Lead.[CodigoMidia]#(lf)    ,LeadAlter.[CodigoModelo]#(lf)    ,LeadAlter.[Qualificacao] as Qualificação#(lf)    ,Unidade.CodigoUnidade#(lf)FROM [SNV_f_LeadStatic] as Lead#(lf)LEFT JOIN [SNV_f_LeadAlter] as LeadAlter on LeadAlter.CodigoLead = Lead.CodigoLead#(lf)LEFT JOIN [SNV_f_VwLeadUnidade] as Unidade on Unidade.CodigoLead = Lead.CodigoLead#(lf)Where Date >= '20240101'  and Loja = 'Atual'#(lf)ORDER BY Date DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

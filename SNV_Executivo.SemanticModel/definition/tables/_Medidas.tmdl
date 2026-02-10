@@ -1,0 +1,2326 @@
+table _Medidas
+	lineageTag: 973f4b87-73ed-49a1-9ded-d71559469174
+
+	measure 'Leads ( Total | Período | N )' =
+			CALCULATE(
+			    COUNTROWS(VALUES(f_Leads[CodigoLead])),
+			    USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date])
+			)
+		formatString: #,0
+		lineageTag: 79b7891c-a0b2-4ecb-b6bd-7e86218e0373
+
+	measure Mar = AVERAGE(f_Metas[%Margem contábil])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: aa0a0e63-1c43-49e4-8731-f04f8de91dff
+
+		changedProperty = FormatString
+
+	measure 'Venda ( Total | Período 1 | N )' =
+			
+			CALCULATE
+			(SUM(f_Vendas[Venda]),
+			USERELATIONSHIP('d_Calendário'[Date],f_Vendas[Date]
+			)
+			)
+		formatString: #,0
+		lineageTag: 614d884b-420d-4386-be7e-3dccb5e615b2
+
+	measure 'Conversão ( Vendas | Período 1 | % )' =
+			DIVIDE(
+			    _Medidas[Venda ( Total | Período 1 | N )],
+			    _Medidas[Leads ( Total | Período | N )],
+			    0
+			)
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: b25e235f-4d89-4c74-9c80-3e86260c4296
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalDivision"
+				}
+
+	measure 'CPL ( Total | Período 1 | N,n )' = ```
+			
+			DIVIDE(
+			    _Medidas[Investimento Realizado ( Total | Período 1 | N,n )],
+			    _Medidas[Leads ( Total | Período | N )],
+			    0
+			)
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 91d00375-6f20-4188-8ea7-3254ae6b5316
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure Margem = [Receita ( Total | Período 1 | N,n )]*[Mar]
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 372e843e-d980-4659-aecb-b7813c1f7c14
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure ROI =
+			DIVIDE(
+			    ([Margem]-[Investimento Realizado ( Total | Período 1 | N,n )]),
+			    [Investimento Realizado ( Total | Período 1 | N,n )],
+			    0
+			)
+		lineageTag: 7ceec129-2bb5-4dd8-b176-03ba427c94dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CPA ( Total | Período 1 | N,n )' =
+			
+			DIVIDE(
+			    [Investimento Realizado ( Total | Período 1 | N,n )],
+			    [Venda ( Total | Período 1 | N )],
+			    0
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: ca6ccfbc-f98d-477c-b9cc-63d60ffefe7f
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalDivision"
+				}
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Investimento Planejado ( Total | Período 1 | N,n )' =
+			CALCULATE(
+			    CALCULATE(
+			    SUM(d_InvestimentoPlanejado[Cost]),
+			    USERELATIONSHIP('d_Calendário'[Date], d_InvestimentoPlanejado[Date])))
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 661a0b1a-1461-4989-8db0-cd699ecfd5cf
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Dif. Invest. ( Real vs Planejado )' =
+			CALCULATE (
+			    [Investimento Realizado ( Total | Período 1 | N,n )]-[Investimento Planejado ( Executivo | Período 1 | N,n )]
+			    /**FILTER (f_InvestimentoRealizado, f_InvestimentoRealizado[Tipo] = "Performance")*/
+			    )
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: ecc64bf6-1aa8-44e0-a0f4-78bfe20df2a4
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Clicks ( Total | Período 1 | N )' = SUM(f_InvestimentoRealizado[Clicks])
+		formatString: #,0
+		lineageTag: fd7e4925-e38f-4fe0-924c-f130833b4394
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Impressão ( Total | Período 1 | N )' =
+			
+			SUM(f_InvestimentoRealizado[Impressions])
+		formatString: #,0
+		lineageTag: a4e562f6-be7d-4ea4-a067-2890ea60ea95
+
+		changedProperty = FormatString
+
+	measure CTR = [Clicks ( Total | Período 1 | N )]/[Impressão ( Total | Período 1 | N )]
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 34dc73a4-f621-4eab-92e1-d02011479642
+
+	measure 'Investimento Realizado ( Total | Período 1 | N,n )' =
+			
+			SUM(f_InvestimentoRealizado[Cost])
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: fdb8f136-15af-4535-ba5c-50b23ee5adfe
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure CPC = ```
+			
+			IF(
+			    OR(
+			        [Investimento Realizado ( Total | Período 1 | N,n )] = BLANK(), 
+			        [Clicks ( Total | Período 1 | N )] = BLANK()
+			    ),
+			    BLANK(),
+			    CALCULATE(
+			        DIVIDE(
+			            [Investimento Realizado ( Total | Período 1 | N,n )],
+			            [Clicks ( Total | Período 1 | N )]
+			        ),
+			        'd_Mídia'[Classificação] = "MKT",
+			        USERELATIONSHIP(d_Origem[Mídia],'d_Mídia'[Mídia])
+			    )
+			)
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 32e93f4f-25bd-4d34-bfa6-5d894f976fa6
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Dias ( Quantidade do mês no intervalo | Periodo | N )' = DAY(EOMONTH(MAX('d_Calendário'[Date]),0))
+		formatString: 0
+		lineageTag: f202ad7d-b24b-4e6d-949e-2d31f1ced4f6
+
+	measure 'Meta ( Venda | Periodo | N )' =
+			
+			SUM(f_Metas[MetaVendas])
+		formatString: #,0
+		lineageTag: 470d2fd3-7025-45a3-b562-e90157c26da1
+
+		changedProperty = FormatString
+
+	measure 'Conversão ( CRM/Tabulação | Período 1 | % )' =
+			DIVIDE(
+			    _Medidas[Venda ( CRM | Período 1 | N )],
+			    _Medidas[Leads ( Total | Período | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 81551287-3805-434f-ba25-06d81b6a9be7
+
+	measure 'Venda ( CRM | Período 1 | N )' = SUM(f_VendaCRM[VendasCRM])
+		formatString: #,0
+		lineageTag: 3b969704-5ac8-458a-93e2-ddea22e5ca9a
+
+	measure 'Receita ( Total | Período 1 | N,n )' =
+			
+			
+			CALCULATE(
+			    SUM(f_Vendas[Receita]),
+			    USERELATIONSHIP('d_Calendário'[Date], f_Vendas[Date]))
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 6452fe66-38ef-42f0-af18-31df0dc6c871
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Ticket Médio ( Total | Período 1 | N,n )' =
+			DIVIDE(
+			    [Receita ( Total | Período 1 | N,n )],
+			    [Venda ( Total | Período 1 | N )],
+			    0
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: fd0f707a-fddd-4fbd-afe7-3e799f75b504
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Conversão ( Site | Período 1 | % )' =
+			DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    [Usuários ( Total | Período 1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b36fabdc-eae0-4ce9-80e9-4fc8645a0337
+
+		changedProperty = FormatString
+
+	measure 'Meta KPI' = 0
+		formatString: 0
+		lineageTag: 62256d58-625c-41fb-978e-ca711a7a643d
+
+	measure 'Validação Semana' = IF(SELECTEDVALUE('d_Calendário'[Dia Sem.])="Sáb",1,IF(SELECTEDVALUE('d_Calendário'[Dia Sem.])="dom",1))
+		formatString: 0
+		lineageTag: 22c33c4e-1d3a-4055-bd0b-c73e7d882e8a
+
+	measure 'Usuários ( Total | Período 1 | N )' = ```
+			SUM(f_Analytics[Users]) 
+			```
+		formatString: #,0
+		lineageTag: 1209a6d8-9361-4fec-abed-b036ba18d65e
+
+		changedProperty = FormatString
+
+	measure 'Dias ( Dias corridos no intervalo | Intervalo | N )' =
+			
+			
+			VAR DaysInInterval = COUNTROWS('d_Calendário')
+			
+			RETURN IF(
+			    DaysInInterval>0,
+			    DaysInInterval
+			)
+		formatString: 0
+		lineageTag: 098a6d20-959b-4843-935c-966afd149622
+
+	measure 'Leads ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Leads ( Total | Período | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: 967c7d4f-9680-420e-9812-d22ab28d1c43
+
+		changedProperty = FormatString
+
+	measure 'Impressão ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Impressão ( Total | Período 1 | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: fdd299ad-3873-4f17-b729-72addf2d09cb
+
+		changedProperty = FormatString
+
+	measure 'Clicks ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Clicks ( Total | Período 1 | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: 585b8a76-56c0-44e7-aacf-0a247b9f09eb
+
+		changedProperty = FormatString
+
+	measure 'Usuários ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Usuários ( Total | Período 1 | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: 742053dd-ffd5-4761-bd43-a2d29071095d
+
+		changedProperty = FormatString
+
+	measure 'Venda ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Venda ( Total | Período 1 | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: ae091da6-ed13-4bce-ba54-51572262e3a5
+
+		changedProperty = FormatString
+
+	measure 'Receita ( Média diária | Período 1 | N,n )' =
+			DIVIDE(
+			    _Medidas[Receita ( Total | Período 1 | N,n )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 0aac27a4-0449-47cb-8296-53ec857e42e7
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'KPI ( Redirecionamento | Seleção | d_Selection )' =
+			
+			SWITCH(
+			    _Medidas[OptionSelected],
+			    "lead", _Medidas[Leads ( Total | Período | N )],
+			    "quali", _Medidas[Leads ( Qualificados | Período1 | N )],
+			    "agend", _Medidas[Agendamentos ( Total Funil | Período | N )],
+			    "Compar",_Medidas[Comparecimento ( Total Funil | Período1 | N )],
+			    "vnf",_Medidas[VNF + Vendas ( Total | Período1 | N )],
+			    "venda",_Medidas[Venda ( Total | Período 1 | N )]
+			)
+		formatString: #,0
+		lineageTag: 8d31fd6e-364a-4bca-94b1-c7e642877cb1
+
+		changedProperty = FormatString
+
+	measure 'Investimento Realizado ( Média diária )' =
+			DIVIDE(
+			    _Medidas[Investimento Realizado ( Total | Período 1 | N,n )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: ba5aa5b5-d680-4ca3-85e0-939e1fdd9bc6
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure Eventos = 0+COUNTROWS(f_EventosRelevantes)+COUNTROWS(f_Deploy)
+		formatString: 0
+		lineageTag: 52ef14e5-742c-426f-ae88-392fc72bec5a
+
+	measure Deploys = ```
+			0+DISTINCTCOUNT(f_Deploy[Sprint]) 
+			```
+		formatString: 0
+		lineageTag: 62ed795b-a514-4fb4-8180-700fff44cea4
+
+	measure 'Fator Proporcional ( D-1 | Periodo | N )' =
+			DIVIDE(
+			    DAY(MAX('d_Calendário'[Date])),
+			    DAY(EOMONTH(MAX('d_Calendário'[Date]),0)),
+			    0
+			)
+		formatString: 0.00000000
+		lineageTag: ebaf0347-70db-47ac-9561-29ba87429dcb
+
+		changedProperty = FormatString
+
+	measure 'Meta ( Leads Dia | Periodo | N,n )' =
+			DIVIDE(
+			    _Medidas[Meta ( Leads | Periodo | N )],
+			    _Medidas[Dias ( Quantidade do mês no intervalo | Periodo | N )],
+			    0
+			)
+		lineageTag: 90bf39f3-2677-403e-b962-63f669152bad
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Meta ( Leads | Periodo | N )' =
+			
+			DIVIDE(
+			    _Medidas[Meta ( Venda | Periodo | N )],
+			    [Meta ( Conversão | Periodo | % )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: b197d70a-76fb-4e85-b374-0b59a0fb6218
+
+		changedProperty = FormatString
+
+	measure 'Meta ( Conversão | Periodo | % )' =
+			
+			CALCULATE(
+			    SUM('f_Metas'[MetaConversão]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[mesAno]=MAX('d_Calendário'[mesAno])
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 61bd4bf2-d247-4ba3-9e62-338b6fc94598
+
+		changedProperty = FormatString
+
+	measure 'Leads ( GAP Diário | Periodo | N )' =
+			DIVIDE(
+			    _Medidas[Leads ( Total | Período | N )],
+			    round(_Medidas[Meta Diária ( Proporcional DU/FDS | Intervalo | N )],0),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: aff7c5a9-0cee-4ca3-94d5-067f4b62beb7
+
+		changedProperty = FormatString
+
+	measure 'Leads ( Projetado | Intervalo | N )' = ```
+			
+			var LeadProj =
+			[Leads ( Total | Período | N )] * [Fator Proporcional ( Projetado | Periodo | N )]
+			var LeadAnt = [Leads M-1]
+			VAR PeriodoSelecionado =
+			    SELECTEDVALUE ( 'd_Calendário'[Periodo] )
+			RETURN 
+			    SWITCH (
+			        TRUE (),
+			        PeriodoSelecionado = "Anterior",
+			        LeadAnt,
+			        LeadProj
+			    )
+			```
+		formatString: #,0
+		lineageTag: 967d71ac-4d4e-4aae-9a48-90c23df7b181
+
+		changedProperty = FormatString
+
+	measure 'Meta ( Leads D-1 | Intervalo | N )' = _Medidas[Meta ( Leads | Periodo | N )]*[Fator Proporcional ( D-1 | Periodo | N )]
+		formatString: #,0
+		lineageTag: 1fdd3fc7-ebd6-465e-a8e1-48f6890dd9e1
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Meta Diária ( Proporcional DU/FDS | Intervalo | N )' =
+			
+			
+			VAR weekdayOrWeekend = CALCULATE(
+			    MAX('d_Calendário'[SemanaOrFDS]),
+			    FILTER(
+			        'd_Calendário',
+			        MAX('d_Calendário'[Date])
+			    )
+			)
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]= MONTH(lastDayOfMonth) && 'd_Calendário'[SemanaOrFDS]="Semana"
+			)
+			VAR tblWeekend = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=MONTH(lastDayOfMonth) && 'd_Calendário'[SemanaOrFDS]="FDS"
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(f_Leads[Leads]),
+			            USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date]),
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(f_Leads[Leads]),
+			            USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date]),
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [SemanaOrFDS]="Semana")) + (COUNTROWS(FILTER(tblThisMonth,[SemanaOrFDS]="FDS")) * weekendFactor)
+			
+			RETURN DIVIDE(
+			    IF(
+			        weekdayOrWeekend="FDS",
+			        weekendFactor,
+			        1
+			    ),
+			    fullMonthProp,
+			    0
+			)*_Medidas[Meta ( Leads | Periodo | N )]
+		formatString: #,0
+		lineageTag: 9c576db1-753d-43af-ab7b-f8543add9ba5
+
+		changedProperty = FormatString
+
+	measure 'Meta Executivo ( CPL | Periodo | N )' = ```
+			
+			
+			VAR cplnormal = AVERAGE(f_Metas[MetaCPL])
+			VAR cplajuste = AVERAGE(d_MetaBudget[CPL])
+			
+			RETURN 
+			IF (
+			    ISBLANK(cplnormal),
+			    cplajuste,
+			    cplnormal
+			)
+			```
+		formatString: 0.00
+		lineageTag: bbec39cc-f75c-45c8-9cc3-a06761d50d78
+
+		changedProperty = FormatString
+
+	measure 'Meta ( Leads D-1 proporcional DU e FDS | Periodo 1 | N )' =
+			
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]= MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=1
+			)
+			VAR tblWeekend = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=0
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR tblPartialMonth = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=monthBase && 'd_Calendário'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblThisMonth,[DiaUtil]=0)) * weekendFactor)
+			VAR partialMonthProp = COUNTROWS(FILTER(tblPartialMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblPartialMonth,[DiaUtil]=0)) * weekendFactor)
+			
+			RETURN DIVIDE(
+			    partialMonthProp,
+			    fullMonthProp,
+			    0
+			)*[Meta ( Leads | Periodo | N )]
+		formatString: #,0
+		lineageTag: 8fdd5341-52c8-45f6-b99d-8e9897851f41
+
+		changedProperty = FormatString
+
+	measure 'KPI ( Projetado | Período 1 | N )' = ```
+			[KPI ( Redirecionamento | Seleção | d_Selection )] * [Fator Proporcional ( D-1 | Periodo | N )] 
+			```
+		lineageTag: 1e5ef3e3-3387-4179-9379-be307346af0a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leads ( D-1 | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-1
+			
+			RETURN CALCULATE(
+			    [Leads ( Total | Período | N )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Date]=selectedDate
+			    )
+			)
+		formatString: 0
+		lineageTag: 10aa244c-513a-481e-9403-326d923fdda9
+
+	measure 'Leads ( Média últimos X dias | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-_Medidas[SelectedDaysValue]
+			
+			VAR tblLastFifteenDays = FILTER(
+			    ALL('d_Calendário'),
+			    'd_Calendário'[Date]>=selectedDate && 'd_Calendário'[Date]<MAX('d_Calendário'[Date])
+			)
+			
+			RETURN DIVIDE(
+			    CALCULATE(
+			        [Leads ( Total | Período | N )],
+			        tblLastFifteenDays
+			    ),
+			    COUNTROWS(tblLastFifteenDays),
+			    0
+			)
+		lineageTag: 5db9a35b-e068-49ab-aa81-0ed6f382c23d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leads ( GAP D-1 - Média | Intervalo | N )' = _Medidas[Leads ( D-1 | Período 1 | N,n )]-_Medidas[Leads ( Média últimos X dias | Período 1 | N,n )]
+		lineageTag: 74199cf1-84c1-4275-a7d1-2cb90e95a99c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI ( D-1 | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])
+			
+			RETURN CALCULATE(
+			    [KPI ( Redirecionamento | Seleção | d_Selection )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Date]=selectedDate-1
+			    )
+			)
+		lineageTag: aaca00e5-563e-420a-87e2-9639f5cd2e97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI ( Média últimos X dias | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-_Medidas[SelectedDaysValue]
+			VAR KPISelected = SELECTEDVALUE(d_SelectionKPIHistoric[_selection])
+			
+			VAR tblLastFifteenDays = FILTER(
+			    ALL('d_Calendário'),
+			    'd_Calendário'[Date]>=selectedDate && 'd_Calendário'[Date]<MAX('d_Calendário'[Date])
+			)
+			
+			VAR KpiVal= CALCULATE(
+			    [KPI ( Redirecionamento | Seleção | d_SelectionKPIHistoric )],
+			    tblLastFifteenDays
+			)
+			
+			RETURN IF(
+			    KPISelected="CPA" || KPISelected="CPL",
+			    KPIVal,
+			    DIVIDE(
+			        KPIVal,
+			        COUNTROWS(tblLastFifteenDays),
+			        0
+			    )
+			)
+		lineageTag: 822dc8d3-3f22-47c9-9199-fe4d1ea7659a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI ( GAP D-1 - Média | Intervalo | N )' = _Medidas[KPI ( D-1 | Período 1 | N,n )]-_Medidas[KPI ( Média últimos X dias | Período 1 | N,n )]
+		lineageTag: 07b08fca-44bd-4907-b35e-f3963b3c4ee8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CPL ( D-1 | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-1
+			
+			RETURN CALCULATE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Date]=selectedDate
+			    )
+			)
+		lineageTag: 11f845cf-3a9c-4961-a1b1-d99940155c21
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Investimento Realizado ( D-1 | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])
+			
+			RETURN CALCULATE(
+			    [Investimento Realizado ( Total | Período 1 | N,n )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Date]=selectedDate
+			    )
+			)
+		formatString: #,0
+		lineageTag: 2e5a1c2d-1727-476b-9564-39473da49068
+
+		changedProperty = FormatString
+
+	measure 'Investimento Realizado ( Média últimos X dias | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-_Medidas[SelectedDaysValue]
+			
+			VAR tblLastFifteenDays = FILTER(
+			    ALL('d_Calendário'),
+			    'd_Calendário'[Date]>=selectedDate && 'd_Calendário'[Date]<MAX('d_Calendário'[Date])
+			)
+			
+			RETURN DIVIDE(
+			    CALCULATE(
+			        [Investimento Realizado ( Total | Período 1 | N,n )],
+			        tblLastFifteenDays
+			    ),
+			    COUNTROWS(tblLastFifteenDays),
+			    0
+			)
+		formatString: #,0.00
+		lineageTag: c50560dc-a82d-4f0a-8ec4-62ad7068bc04
+
+		changedProperty = FormatString
+
+	measure 'CPL ( Média últimos X dias | Período 1 | N,n )' =
+			
+			
+			VAR selectedDate=MAX('d_Calendário'[Date])-_Medidas[SelectedDaysValue]
+			
+			VAR tblLastFifteenDays = FILTER(
+			    ALL('d_Calendário'),
+			    'd_Calendário'[Date]>=selectedDate && 'd_Calendário'[Date]<MAX('d_Calendário'[Date])
+			)
+			
+			RETURN CALCULATE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    tblLastFifteenDays
+			)
+		lineageTag: 4a94cafa-e798-4324-a00a-aa45d6057e78
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CPL ( GAP D-1 - Média | Intervalo | N )' = _Medidas[CPL ( D-1 | Período 1 | N,n )]-_Medidas[CPL ( Média últimos X dias | Período 1 | N,n )]
+		lineageTag: 70f92e8f-4620-4181-ab3e-53cff64a01f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Investimento Realizado ( GAP D-1 - Média | Intervalo | N )' = _Medidas[Investimento Realizado ( D-1 | Período 1 | N,n )]-_Medidas[Investimento Realizado ( Média últimos X dias | Período 1 | N,n )]
+		formatString: #,0.00
+		lineageTag: 5c19a2b7-0dc2-4e71-ac39-ef6e6a912ca4
+
+		changedProperty = FormatString
+
+	measure SelectedDaysValue = SELECTEDVALUE('d_SelectDays'[Dias])
+		formatString: 0
+		lineageTag: 1003d2c6-c164-493f-af55-f79820eaaaad
+
+	measure 'Investimento Projetado ( Total | Período 1 | N,n )' = [Investimento Realizado ( Total | Período 1 | N,n )] * [Fator Proporcional ( Projetado | Periodo | N )]
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: eb73067a-bec0-42ef-af37-fa327c74705e
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Fator Proporcional ( Projetado | Periodo | N )' =
+			DIVIDE(
+			    DAY(EOMONTH(MAX('d_Calendário'[Date]),0)),
+			    DAY(MAX('d_Calendário'[Date])),
+			    0
+			)
+		lineageTag: 7e873019-2ab3-415e-96d6-5a93614bb539
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Investimento Planejado ( Total Mês | Período 1 | N,n )' =
+			
+			CALCULATE(
+			    SUM(d_InvestimentoPlanejado[Cost]),
+			    USERELATIONSHIP('d_CalendárioApoio'[Date], d_InvestimentoPlanejado[Date]),
+			    FILTER(
+			        ALL('d_CalendárioApoio'),
+			        'd_CalendárioApoio'[Mês]=MONTH(MAX('d_Calendário'[Date])) && 'd_CalendárioApoio'[Ano]=YEAR(MAX('d_Calendário'[Date]))
+			    )
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 936896f4-ca19-4b35-9958-71610992a1b5
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'CPL  ( Anterior | Período 1 | N,n )' =
+			CALCULATE(
+			    [CPL ( Total | Período 1 | N,n )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Periodo]="Anterior"
+			    )
+			)
+		lineageTag: 49115510-c530-47f7-bd8b-636a730d8ffc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Venda ( Anterior | Período 1 | N )' =
+			CALCULATE(
+			    [Venda ( Total | Período 1 | N )],
+			    FILTER(
+			        ALL('d_Calendário'),
+			        'd_Calendário'[Periodo]="Anterior"
+			    )
+			)
+		formatString: #,0
+		lineageTag: f5d3234b-b594-4108-8c4f-fb4debdaf47b
+
+		changedProperty = FormatString
+
+	measure 'Venda ( Projetada | Período 1 | N )' = [Venda ( Total | Período 1 | N )]*[Fator Proporcional ( Projetado | Periodo | N )]
+		formatString: #,0
+		lineageTag: 0e6ea10f-784d-4142-b31a-73d07e4b00e0
+
+		changedProperty = FormatString
+
+	measure 'Usuários ( Organic | Período 1 | N )' =
+			CALCULATE(
+			    SUM('f_Analytics'[Users]),
+			    FILTER(
+			        f_Analytics,
+			        f_Analytics[Origem]="Google-Analytics-GoogleOrganic"
+			    )
+			)
+		formatString: #,0
+		lineageTag: c136b6f1-6ace-4dbb-8507-c42a83c180be
+
+		changedProperty = FormatString
+
+	measure 'Usuários ( Organic - Anterior | Período 1 | N )' =
+			CALCULATE(
+			    [Usuários ( Organic | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo]="Anterior"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 19543828-8cc4-48db-950e-25e2eb4fac35
+
+		changedProperty = FormatString
+
+	measure 'Usuários ( Organic - Atual | Período 1 | N )' =
+			CALCULATE(
+			    [Usuários ( Organic | Período 1 | N )],
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo]="Atual"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 43c08aa5-7534-478c-82dc-a6d680b51f3f
+
+		changedProperty = FormatString
+
+	measure 'Leads ( Site| Período | N )' =
+			CALCULATE(
+			    [Leads ( Total | Período | N )],
+			    'd_Mídia'[CategoriaMacro]="Site Unidas"
+			)
+		formatString: 0
+		lineageTag: 261e680d-9c82-4c06-acb5-2d6e7bcd07c8
+
+		changedProperty = FormatString
+
+	measure 'Investimento Realizado ( Site | Período 1 | N,n )' =
+			CALCULATE(
+			    _Medidas[Investimento Realizado ( Total | Período 1 | N,n )],
+			    'd_Mídia'[CategoriaMacro]="Site Unidas"
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 472752c5-dba1-44e3-a0c8-a306ef6dd8be
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Meta ( Vendas D-1 | Intervalo | N )' = _Medidas[Meta ( Venda | Periodo | N )]*[Fator Proporcional ( D-1 | Periodo | N )]
+		formatString: 0
+		lineageTag: 6e64a2c0-0785-46be-95d6-738273666c52
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Usuários Site ( Total | Período 1 | N )' =
+			
+			CALCULATE(
+			    SUM(f_Analytics[Users]),
+			    f_Analytics[Origem]<>"Google-Analytics-Feirão"
+			)
+		formatString: #,0
+		lineageTag: 558f4bef-9067-4b0d-a0bf-169007e99eed
+
+		changedProperty = FormatString
+
+	measure 'Meta Desafio ( Conversão | Periodo | % )' =
+			
+			CALCULATE(
+			    SUM('f_Metas'[MetaDesafio]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Mês]=MAX('d_Calendário'[Mês])
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1245687e-95a8-4645-b514-6436a02f1442
+
+		changedProperty = FormatString
+
+	measure 'Meta Desafio ( Leads | Periodo | N )' =
+			
+			DIVIDE(
+			    _Medidas[Meta ( Venda | Periodo | N )],
+			    [Meta Desafio ( Conversão | Periodo | % )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: a47076ad-a92c-4f04-af92-7599478a96db
+
+		changedProperty = FormatString
+
+	measure 'Meta Desafio ( Leads D-1 | Intervalo | N )' =
+			
+			_Medidas[Meta Desafio ( Leads | Periodo | N )]*[Fator Proporcional ( D-1 | Periodo | N )]
+		lineageTag: a55dba0a-9f30-445d-9069-9d8b65b1342f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Meta Desafio ( Leads D-1 proporcional DU e FDS | Periodo 1 | N )' =
+			
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]= MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=1
+			)
+			VAR tblWeekend = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=0
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR tblPartialMonth = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=monthBase && 'd_Calendário'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblThisMonth,[DiaUtil]=0)) * weekendFactor)
+			VAR partialMonthProp = COUNTROWS(FILTER(tblPartialMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblPartialMonth,[DiaUtil]=0)) * weekendFactor)
+			
+			RETURN DIVIDE(
+			    partialMonthProp,
+			    fullMonthProp,
+			    0
+			)*[Meta Desafio ( Leads | Periodo | N )]
+		formatString: #,0
+		lineageTag: 35a9ceba-afaa-433d-8288-d2c8b2094823
+
+		changedProperty = FormatString
+
+	measure 'Meta Diária Desafio ( Proporcional DU/FDS | Intervalo | N )' =
+			
+			
+			VAR weekdayOrWeekend = CALCULATE(
+			    MAX('d_Calendário'[SemanaOrFDS]),
+			    FILTER(
+			        'd_Calendário',
+			        MAX('d_Calendário'[Date])
+			    )
+			)
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]= MONTH(lastDayOfMonth) && 'd_Calendário'[SemanaOrFDS]="Semana"
+			)
+			VAR tblWeekend = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=MONTH(lastDayOfMonth) && 'd_Calendário'[SemanaOrFDS]="FDS"
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(f_Leads[Leads]),
+			            USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date]),
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            SUM(f_Leads[Leads]),
+			            USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date]),
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [SemanaOrFDS]="Semana")) + (COUNTROWS(FILTER(tblThisMonth,[SemanaOrFDS]="FDS")) * weekendFactor)
+			RETURN DIVIDE(
+			    IF(
+			        weekdayOrWeekend="FDS",
+			        weekendFactor,
+			        1
+			    ),
+			    fullMonthProp,
+			    0
+			)*_Medidas[Meta Desafio ( Leads | Periodo | N )]
+		formatString: #,0
+		lineageTag: ac9fa0d5-3047-4167-b0e9-04e84635107b
+
+		changedProperty = FormatString
+
+	measure 'Leads Desafio ( GAP Diário | Periodo | N )' =
+			DIVIDE(
+			    _Medidas[Leads ( Total | Período | N )],
+			    _Medidas[Meta Diária Desafio ( Proporcional DU/FDS | Intervalo | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eca1e720-514e-47fe-9729-63ccf9c651be
+
+		changedProperty = FormatString
+
+	measure Atualização = MAX('d_Atualização'[d_Atualização])
+		formatString: General Date
+		lineageTag: 980a504d-e281-4526-8424-c4505a9bcf4a
+
+	measure 'Usuários por clicks ( Total | Período 1 | N,n )' = ```
+			DIVIDE(
+			    [Usuários ( Total | Período 1 | N )],
+			    [Clicks ( Total | Período 1 | N )],
+			    0
+			) 
+			```
+		lineageTag: e2ed9527-e172-4c23-8328-c5f53b7412e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure lastAtt = ```
+			CALCULATE(
+			    MAX('d_Calendário'[Date]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Periodo]="Atual"
+			    )
+			) 
+			```
+		formatString: General Date
+		lineageTag: 6ffd3289-0702-4a92-b9d1-378c6cf09bfe
+
+	measure 'Usuários ( Mensal | Período 1 | N )' = SUM(f_Analytics_Monthly[Users])
+		formatString: #,0
+		lineageTag: 9e3677b8-90ad-4cc7-8787-9da40d72db2f
+
+		changedProperty = FormatString
+
+	measure 'Conversão ( Mensal | Período 1 | % )' =
+			DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    [Usuários ( Mensal | Período 1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 95f5d241-23dd-44c1-a387-52e9739ca27e
+
+		changedProperty = FormatString
+
+	measure 'Meta ( Leads média diária | Periodo | N )' =
+			
+			DIVIDE(
+			    [Meta ( Leads | Periodo | N )],
+			    [Dias ( Quantidade do mês no intervalo | Periodo | N )],
+			    0
+			)
+		lineageTag: fd004c11-d069-4e3f-989f-38fad59bed8a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Vendas ( Média diária )' =
+			DIVIDE(
+			    [Venda ( Total | Período 1 | N )],
+			    _Medidas[Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		lineageTag: 6e1d61a6-eae4-43eb-95be-b1a359a0a929
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Meta ( Vendas média diária | Periodo | N )' =
+			
+			DIVIDE(
+			    [Meta ( Venda | Periodo | N )],
+			    [Dias ( Quantidade do mês no intervalo | Periodo | N )],
+			    0
+			)
+		lineageTag: 742ee77e-c2a0-4a52-afe6-ab2ccfb6ffd6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Meta ( Leads D-1 proporcional DU e FDS | Filtro de mês único | N )' =
+			
+			// medida para uso em telas com filtro de mês único, adaptação da medida original
+			// calcula o número de leads necessários para o mês atual em cada dia da semana ou dia útil, com base na média realizada em cada um desses períodos no mês anterior
+			
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]= MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=1
+			)
+			VAR tblWeekend = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=0
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR tblPartialMonth = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=monthBase && 'd_Calendário'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblThisMonth,[DiaUtil]=0)) * weekendFactor)
+			VAR partialMonthProp = COUNTROWS(FILTER(tblPartialMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblPartialMonth,[DiaUtil]=0)) * weekendFactor)
+			
+			RETURN DIVIDE(
+			    partialMonthProp,
+			    fullMonthProp,
+			    0
+			)*[Meta ( Leads | Periodo | N )]
+		formatString: #,0
+		lineageTag: 6fdade7d-cab3-4aaa-9b9e-aac3299eb6c7
+
+	measure 'Leads ( Total | Período2 | N )' =
+			CALCULATE(
+			      COUNTROWS(VALUES(f_Leads[CodigoLead])),
+			    USERELATIONSHIP('d_CalendárioApoio'[Date], f_Leads[Date])
+			)
+		formatString: #,0
+		lineageTag: 9eed01c9-9431-4caa-8de0-3e574a6dd669
+
+	measure 'QuantidadeLojas ( Total | Período 1 | N )' = ```
+			Sum ( f_QuantidadeLojas[Quantidade]) 
+			```
+		formatString: 0
+		lineageTag: 2843fe27-649c-4fbe-8364-dfc27fd10f4c
+
+	measure 'Vendas por Loja ( Total | Período 1 | N,n)' = DIVIDE ( [Venda ( Total | Período 1 | N )], [QuantidadeLojas ( Total | Período 1 | N )], 0)
+		lineageTag: a7c00bcd-b86d-4bfe-9b10-9158aa918a69
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leads por Loja ( Total | Período 1 | N,n)' = DIVIDE ( [Leads ( Total | Período | N )], [QuantidadeLojas ( Total | Período 1 | N )], 0)
+		lineageTag: 54d91b17-0148-4001-bc8f-01a526627bda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Investimento Planejado ( Executivo | Período 1 | N,n )' =
+			
+			IF(
+			    [Investimento Planejado ( Total | Período 1 | N,n )] > 0,
+			    [Investimento Planejado ( Total | Período 1 | N,n )],
+			    [Investimento Planejado( Budget | Período 1 | N,n )]
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: e3455a92-7148-44cc-ba68-65112024c647
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'CPL (Meta | Executivo)' =
+			
+			IF(
+			    [Meta ( CPL)] > 0,
+			    [Meta ( CPL)] ,
+			    [CPL ( Budget | Período 1 | N,n )]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: aefa7d52-bcc3-4057-a097-f34cac57c599
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Meta Executivo ( Conversão | Periodo | % )' = ```
+			
+			VAR ajustenormal = CALCULATE(
+			    SUM('f_Metas'[MetaConversão]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[mesAno]=MAX('d_Calendário'[mesAno])
+			    )
+			)
+			
+			VAR ajuste = CALCULATE(
+			    SUM('d_MetaBudget'[Tx Conv]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[mesAno]=MAX('d_Calendário'[mesAno])
+			    )
+			)
+			
+			RETURN 
+			IF (
+			    ISBLANK(ajustenormal),
+			    ajuste,
+			    ajustenormal
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 468d9bc2-b699-4d36-9f2b-8ca77957a724
+
+	measure 'Vendas  ( Meta | Executivo)' =
+			
+			IF(
+			      [Meta ( Venda | Periodo | N )] >0,
+			      [Meta ( Venda | Periodo | N )],
+			      [Vendas  ( Meta | Budget)]
+			)
+		formatString: #,0
+		lineageTag: d9eb8579-66aa-4939-b726-013f59cfaad4
+
+	measure 'Meta Executiva ( Venda | Periodo | N )' = ```
+			
+			var soma = SUM(f_Metas[MetaVendas])
+			var ajuste = SUM(d_MetaBudget[Meta Vendas])
+			RETURN
+			IF(ISBLANK(soma), ajuste, soma) 
+			```
+		formatString: #,0
+		lineageTag: 2242eaed-d30e-4be9-8466-c5f7696add1a
+
+	measure 'Meta Executivo ( Leads D-1 proporcional DU e FDS | Periodo 1 | N )' =
+			
+			VAR lastDayOfMonth = EOMONTH(MAX('d_Calendário'[Date]),-1)
+			VAR tblWeek = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]= MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=1
+			)
+			VAR tblWeekend = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=MONTH(lastDayOfMonth) && 'd_CalendárioApoio'[Ano]= YEAR(lastDayOfMonth) && 'd_CalendárioApoio'[DiaUtil]=0
+			)
+			VAR weekendFactor = DIVIDE(
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeekend
+			        ),
+			        COUNTROWS(tblWeekend),
+			        0
+			    ),
+			    DIVIDE(
+			        CALCULATE(
+			            [Leads ( Total | Período2 | N )],
+			            tblWeek
+			        ),
+			        COUNTROWS(tblWeek),
+			        0
+			    ),
+			    0
+			)
+			VAR monthBase = MONTH(MAX('d_Calendário'[Date]))
+			VAR yearBase = YEAR(MAX('d_Calendário'[Date]))
+			VAR tblThisMonth = FILTER(
+			    ALL('d_CalendárioApoio'),
+			    'd_CalendárioApoio'[Mês]=monthBase && 'd_CalendárioApoio'[Ano]=yearBase
+			)
+			VAR tblPartialMonth = FILTER(
+			    ALLSELECTED('d_Calendário'),
+			    'd_Calendário'[Mês]=monthBase && 'd_Calendário'[Ano]=yearBase
+			)
+			VAR fullMonthProp = COUNTROWS(FILTER(tblThisMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblThisMonth,[DiaUtil]=0)) * weekendFactor)
+			VAR partialMonthProp = COUNTROWS(FILTER(tblPartialMonth, [DiaUtil]=1)) + (COUNTROWS(FILTER(tblPartialMonth,[DiaUtil]=0)) * weekendFactor)
+			
+			Var meta1 = [Meta ( Leads | Periodo | N )]
+			VAR meta2 = [Meta Executivo ( Leads | Periodo | N )]
+			
+			RETURN DIVIDE(
+			    partialMonthProp,
+			    fullMonthProp,
+			    0
+			)*IF(ISBLANK(meta1), meta2, meta1)
+		formatString: #,0
+		lineageTag: aeca3980-2925-450f-928f-33032503bce3
+
+	measure 'Meta Executivo ( Leads | Periodo | N )' =
+			
+			DIVIDE(
+			    [Meta Executiva ( Venda | Periodo | N )],
+			    [Meta Executivo ( Conversão | Periodo | % )],
+			    0
+			)
+		formatString: #,0
+		lineageTag: 25f0afb0-0d2b-463d-aff0-7e8c1796817c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Investimento Planejado( Budget | Período 1 | N,n )' = ```
+			
+			var investimentoPlanejado = SUM(d_MetaBudget[Invest Planejado])
+			var investimentoDiario = DIVIDE(investimentoPlanejado, [Dias M0],0)
+			 
+			RETURN investimentoDiario * [Dias corridos ( Total | Período 1 | N )]
+			```
+		lineageTag: 6668c546-f33b-413c-9281-77383f2146a7
+
+	measure 'Vendas  ( Meta | Budget)' =
+			
+			SUM (
+			    d_MetaBudget[Meta Vendas]
+			)
+		formatString: 0
+		lineageTag: 48b4a9ad-8376-421c-91ba-641c6e1dcbd6
+
+	measure 'CPL ( Budget | Período 1 | N,n )' =
+			
+			SUM(
+			    d_MetaBudget[CPL]
+			)
+		formatString: 0
+		lineageTag: 68b8838d-631a-4a45-942e-06ac5ce3305c
+
+	measure 'Meta ( CPL)' =
+			AVERAGE
+			    (f_Metas[MetaCPL]
+			)
+		formatString: #,0.00
+		lineageTag: bd8ae4f9-66b5-4bd7-b275-32fbc88b37bd
+
+	measure 'Leads  (Meta | Budget)' =
+			
+			SUM (
+			    d_MetaBudget[Leads]
+			)
+		formatString: 0
+		lineageTag: 99e16a76-d3fa-4dc6-972e-1e4c7bdfc324
+
+	measure 'Leads  (Meta | Executivo)' =
+			
+			IF (
+			     [Meta ( Leads | Periodo | N )] >0,
+			     [Meta ( Leads | Periodo | N )],
+			     [Leads  (Meta | Budget)]
+			)
+		lineageTag: 8c6be7cd-b887-466a-bf5e-a9e404f9572e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Diferença Venda ( Atual - Anterior | Periodo1-2 | % )' = ```
+			
+			VAR indicador = DIVIDE(
+			    _Medidas[Venda ( Total | Período 1 | N )],
+			    _Medidas[Vendas ( Total | Período2 | N )],
+			    0
+			)
+			 
+			RETURN 
+			SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(),  _Medidas[Venda ( Total | Período 1 | N )]>0 ), 1,
+			    AND(indicador=BLANK(),  _Medidas[Venda ( Anterior | Período 1 | N )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9d7d2045-aca4-40da-9dcd-4e0eacbd33a0
+
+	measure 'Diferença Leads ( Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador = DIVIDE(
+			    _Medidas[Leads ( Total | Período | N )],
+			    _Medidas[Leads ( Total | Período2 | N )],
+			    0
+			)
+			
+			RETURN SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(), _Medidas[Leads ( Total | Período | N )]>0 ), 1,
+			    AND(indicador=BLANK(), _Medidas[Leads ( Total | Período2 | N )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7d9bd0c0-481a-4dbf-ab55-9e6c817019e3
+
+	measure 'Venda Não Faturada (Total | Período1 | N )' = ```
+			0+CALCULATE(
+			    COUNTROWS(VALUES(f_StatusFichaVenda[codigofichavenda])),
+			    FILTER(
+			        f_StatusFichaVenda,
+			        f_StatusFichaVenda[Status] = "VNF" 
+			    ),
+			    USERELATIONSHIP('d_Calendário'[Date], f_StatusFichaVenda[Date])
+			)
+			```
+		formatString: #,0
+		lineageTag: e31138e7-15f7-46f7-b878-c1855f088063
+
+	measure 'Conversão ( Intervalo | Período1 | % )' = ```
+			DIVIDE( 
+			    _Medidas[Venda ( Total | Período 1 | N )] ,
+			    _Medidas[Leads ( Total | Período | N )],
+			    0
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2cef696c-add9-43cb-b634-1f6dca2b5b48
+
+	measure 'Meta ( Conversão | Periodo1 | % )' =
+			
+			CALCULATE(
+			    MAX('f_Metas'[MetaConversão]),
+			    FILTER(
+			        'd_Calendário',
+			        'd_Calendário'[Date]=MAX('d_Calendário'[date])
+			    )
+			)
+		lineageTag: 40565239-ca5b-4781-8274-29039d9440ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Agendamentos ( Média por pessoa | Intervalo | N )' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS(f_Agendamentos),
+			        USERELATIONSHIP('d_Calendário'[Date],f_Agendamentos[Date])
+			    ),
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Agendamentos[CodigoLead]),
+			        USERELATIONSHIP('d_Calendário'[Date],f_Agendamentos[Date])
+			    ),
+			    0
+			)
+		formatString: 0.00
+		lineageTag: e23ac92e-00e6-4a07-89d0-cdb9ece117cf
+
+	measure OptionSelected =
+			IF(
+			    NOT(HASONEVALUE(d_Selection[Option])),
+			    "",
+			    MAX(d_Selection[Value])
+			)
+		lineageTag: ec78bda9-7971-4f44-9de5-3a3236723e7a
+
+	measure 'Comparecimento ( Total | Período1 | N )' = ```
+			
+			IF(
+			    _Medidas[OptionSelected]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Comparecimentos[CodigoLead]),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Comparecimentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Comparecimentos[CodigoLead])
+			       
+			       
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Comparecimentos),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Comparecimentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Comparecimentos[CodigoLead])
+			       
+			       
+			    )
+			)
+			```
+		lineageTag: 54fc7869-d924-4650-b776-13b369f7ef32
+
+	measure 'Agendamentos ( Total | Período | N )' =
+			
+			IF(
+			    _Medidas[OptionSelected]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Agendamentos[CodigoLead]),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Agendamentos[Date]),
+			         USERELATIONSHIP(d_TipoLead[CodigoLead], f_Agendamentos[CodigoLead])
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Agendamentos),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Agendamentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Agendamentos[CodigoLead])
+			    )
+			)
+		formatString: 0
+		lineageTag: c540797c-ef1c-476d-b4b6-adb79ef00f07
+
+	measure 'Agendamentos ( Média por comparecimento | Intervalo | N )' =
+			
+			DIVIDE(
+			    _Medidas[Agendamentos ( Total | Período | N )],
+			    _Medidas[Comparecimento ( Total | Período1 | N )],
+			    0
+			)
+		lineageTag: 325d077c-9bae-49da-bfbf-6cebd7abe24f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Leads ( Qualificados | Período1 | N )' =
+			
+			CALCULATE(
+			    [Leads ( Total | Período | N )],
+			    FILTER(
+			        f_Leads,
+			        f_Leads[Qualificação]="Qualificado"
+			    )
+			)
+		formatString: 0
+		lineageTag: c560b2bd-40e6-49ae-bc67-254025139652
+
+	measure 'VNF + Vendas ( Total | Período1 | N )' =
+			
+			[Venda Não Faturada (Total | Período1 | N )]+[Venda ( Total | Período 1 | N )]
+		formatString: 0
+		lineageTag: cdc86408-01ab-4aaa-945c-b02af2a9be90
+
+	measure 'Leads ( Qualificados | Período2 | N )' =
+			
+			CALCULATE(
+			    [Leads ( Total | Período2 | N )],
+			    FILTER(
+			        f_Leads,
+			        f_Leads[Qualificação]="Qualificado"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 19388dcb-d3ad-4fce-9de6-b0828afaf62c
+
+	measure 'Agendamentos ( Total | Período2 | N )' =
+			
+			IF(
+			    _Medidas[OptionSelected]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Agendamentos[CodigoLead]),
+			        USERELATIONSHIP('d_CalendárioApoio'[Date], f_Agendamentos[Date])
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Agendamentos),
+			        USERELATIONSHIP('d_CalendárioApoio'[Date], f_Agendamentos[Date])
+			    )
+			)
+		lineageTag: 26b59420-b002-4b3d-b8e1-abaa9fdd5585
+
+	measure 'Comparecimento ( Total | Período2 | N )' =
+			
+			IF(
+			    _Medidas[OptionSelected]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Comparecimentos[CodigoLead]),
+			        USERELATIONSHIP('d_CalendárioApoio'[Date], f_Comparecimentos[Date])
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Comparecimentos),
+			        USERELATIONSHIP('d_CalendárioApoio'[Date], f_Comparecimentos[Date])
+			    )
+			)
+		formatString: 0
+		lineageTag: d0ae5bd6-911f-429d-841b-209a2c65c9bc
+
+	measure 'Vendas ( Total | Período2 | N )' = ```
+			
+			    CALCULATE(
+			        SUM(f_Vendas[Venda]),
+			        USERELATIONSHIP('d_CalendárioApoio'[Date],f_Vendas[Date])
+			    )
+			```
+		formatString: 0
+		lineageTag: fe8c54f2-9177-4e9f-8978-f2755716e011
+
+	measure 'Venda Não Faturada (Total | Período2 | N )' = ```
+			0+CALCULATE(
+			    COUNTROWS(VALUES(f_StatusFichaVenda[codigofichavenda])),
+			    FILTER(
+			        f_StatusFichaVenda,
+			        f_StatusFichaVenda[Status] = "VNF" 
+			    ),
+			    USERELATIONSHIP('d_CalendárioApoio'[Date], f_StatusFichaVenda[Date])
+			)
+			```
+		formatString: #,0
+		lineageTag: c76bb857-9031-4f76-958e-1e098da17093
+
+	measure 'VNF + Vendas ( Total | Período2 | N )' =
+			
+			[Venda Não Faturada (Total | Período2 | N )]+[Vendas ( Total | Período2 | N )]
+		formatString: 0
+		lineageTag: fa88985c-33d4-4ef6-b862-8d477334badb
+
+	measure 'Leads ( Qualificados | Período | % )' =
+			
+			DIVIDE(
+			    [Leads ( Qualificados | Período1 | N )],
+			    [Leads ( Total | Período | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b54b4edf-3568-44a0-93fb-e7423b0a5101
+
+	measure 'Leads ( Qualificados | Período2 | % )' =
+			
+			DIVIDE(
+			    [Leads ( Qualificados | Período2 | N )],
+			    [Leads ( Total | Período2 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0432ab7f-a478-4da4-8a10-8e52dbb24743
+
+	measure 'Agendamentos ( Total | Período1 | % )' =
+			
+			DIVIDE(
+			    [Agendamentos ( Total | Período | N )],
+			    [Leads ( Qualificados | Período1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 42d56c3c-43c7-4572-acfb-8edc849cdc09
+
+	measure 'Agendamentos ( Total | Período2 | % )' =
+			
+			DIVIDE(
+			    [Agendamentos ( Total | Período2 | N )],
+			    [Leads ( Qualificados | Período2 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 455ff213-84f3-49e2-b580-8948affe9535
+
+	measure 'Comparecimento ( Total | Período1 | % )' =
+			
+			DIVIDE(
+			    [Comparecimento ( Total | Período1 | N )],
+			    [Agendamentos ( Total | Período | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7b55510f-d9e2-4395-8395-15ee18d13fcd
+
+	measure 'Comparecimento ( Total | Período2 | % )' =
+			
+			DIVIDE(
+			    [Comparecimento ( Total | Período2 | N )],
+			    [Agendamentos ( Total | Período2 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 22ffc5a2-dcc4-4188-a43b-63d2333fe412
+
+	measure 'VNF + Vendas ( Total | Período1 | % )' =
+			
+			DIVIDE(
+			    [VNF + Vendas ( Total | Período1 | N )],
+			    [Comparecimento ( Total | Período1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 77953eeb-d871-4018-a1f4-f1b5ab31314e
+
+	measure 'VNF + Vendas ( Total | Período2 | % )' =
+			
+			DIVIDE(
+			    [VNF + Vendas ( Total | Período2 | N )],
+			    [Comparecimento ( Total | Período2 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b010c88a-8841-4b99-a787-d68f664ce44c
+
+	measure 'Vendas ( Total | Período1 | % )' =
+			
+			DIVIDE(
+			    [Venda ( Total | Período 1 | N )],
+			    [VNF + Vendas ( Total | Período1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5580ac50-34ec-4e33-b4e7-30a12e9c6ff6
+
+	measure 'Vendas ( Total | Período2 | % )' =
+			
+			DIVIDE(
+			    [Vendas ( Total | Período2 | N )],
+			    [VNF + Vendas ( Total | Período2 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 08d8194f-2211-45bd-a67a-bb8a79c32e7f
+
+	measure 'Diferença Agendamentos % ( Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador=DIVIDE(
+			    _Medidas[Agendamentos ( Total | Período1 | % )],
+			    _Medidas[Agendamentos ( Total | Período2 | % )],
+			    0
+			)
+			
+			RETURN IF(
+			    indicador<>BLANK(),
+			    indicador-1
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1c4912b5-3e01-4703-b3d9-8c6d3f2aa364
+
+	measure 'Diferença Comparecimentos % ( Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador = DIVIDE(
+			    _Medidas[Comparecimento ( Total | Período1 | % )],
+			    _Medidas[Comparecimento ( Total | Período2 | % )],
+			    0
+			)
+			RETURN SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(), _Medidas[Comparecimento ( Total | Período1 | % )]>0 ), 1,
+			    AND(indicador=BLANK(), _Medidas[Comparecimento ( Total | Período2 | % )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 69024699-9956-4d56-ae27-846b77348fb2
+
+	measure 'Diferença Leads % ( Qualificados Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador = DIVIDE(
+			    _Medidas[Leads ( Qualificados | Período | % )],
+			    _Medidas[Leads ( Qualificados | Período2 | % )],
+			    0
+			)
+			
+			RETURN SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(), _Medidas[Leads ( Qualificados | Período | % )]>0 ), 1,
+			    AND(indicador=BLANK(), _Medidas[Leads ( Qualificados | Período2 | % )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8c8062db-618a-4940-9c48-80f6c3af590e
+
+	measure 'Diferença Venda + VNF ( Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador = DIVIDE(
+			    _Medidas[VNF + Vendas ( Total | Período1 | N )],
+			    _Medidas[VNF + Vendas ( Total | Período2 | N )],
+			    0
+			)
+			
+			RETURN SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(), _Medidas[VNF + Vendas ( Total | Período1 | N )]>0 ), 1,
+			    AND(indicador=BLANK(), _Medidas[VNF + Vendas ( Total | Período2 | N )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fc41ac18-94d4-4f91-af6f-1c922660fecb
+
+	measure 'Diferença Venda % ( Atual - Anterior | Periodo1-2 | % )' =
+			
+			VAR indicador=DIVIDE(
+			    _Medidas[Vendas ( Total | Período1 | % )],
+			    _Medidas[Vendas ( Total | Período2 | % )],
+			    0
+			)
+			
+			RETURN SWITCH(
+			    TRUE(),
+			    AND(indicador=BLANK(), _Medidas[Vendas ( Total | Período1 | % )]>0 ), 1,
+			    AND(indicador=BLANK(), _Medidas[Vendas ( Total | Período2 | % )]>0 ), -1,
+			    indicador<>BLANK(), indicador-1,
+			    BLANK()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 585b8f68-b3a8-452b-a3aa-4cf11107f203
+
+	measure 'Ticket Médio ( Preço Chamada | Período | N,n )' =
+			CALCULATE(
+			    AVERAGE(f_Base_Precificacao[CHAMADA])
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 8357eb38-f785-47a7-a7a7-6a2f3ff5c86b
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Volume Estoque ( Placas | Período | N )' = DISTINCTCOUNT(f_Base_Precificacao[PLACA])
+		formatString: #,0
+		lineageTag: 73a15c8e-66b7-42b3-9347-eb92da7489b9
+
+	measure 'Mix ( Modelos | Período | N )' = DISTINCTCOUNT(f_Base_Precificacao[ChaveModelo])
+		formatString: 0
+		lineageTag: 8b67469f-6b4c-4c8d-918c-b13632c982f6
+
+	measure 'Anunciados ( Total | Período 1 | N )' =
+			CALCULATE(
+			    COUNT('f_VeículosAnunciados'[Placa])
+			)
+		formatString: #,0
+		lineageTag: ee170f08-0157-4882-a0d9-b3f59d6f004c
+
+	measure 'KPI ( Redirecionamento | Seleção | d_Selection | % )' = ```
+			
+			SWITCH(
+			    _Medidas[OptionSelected],
+			    "quali(%)", _Medidas[Leads ( Qualificados | Período | % )],
+			    "agend(%)", _Medidas[Agendamentos ( Total Funil  | Período1 | % )],
+			    "compar(%)",_Medidas[Comparecimento ( Total Funil | Período1 | % )],
+			    "vnf(%)",_Medidas[VNF + Vendas ( Total | Período1 | % )],
+			    "venda(%)",_Medidas[Vendas ( Total | Período1 | % )],
+			    "convers nf (%)", [Conversão ( Vendas NF | Período 1 | % )],
+			    "convers (%)", [Conversão ( Vendas | Período 1 | % )])
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e75e9a23-0956-46ac-b46a-3cdbd0afa3f7
+
+	measure 'KM (Média)' = AVERAGE(f_Base_Precificacao[KM])
+		formatString: #,0
+		lineageTag: ef3671ba-1b4c-461e-a09c-8ca07b884b81
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Mix ( Modelos | Período | N ) Modelo' = DISTINCTCOUNT(f_Base_Precificacao[MODELO])
+		formatString: 0
+		lineageTag: b2c03833-1b88-4085-808f-84126dcfe203
+
+	measure 'Mix ( Modelos | Período | N ) CHAVE' = DISTINCTCOUNT(f_Base_Precificacao[CHAVE MODELO])
+		formatString: 0
+		lineageTag: 851dc258-717c-4ed5-9138-fe127ccca73b
+
+	measure CategoriaValidação = ```
+			
+			SELECTCOLUMNS(
+			   f_Base_Precificacao,
+			   "Categoria", f_Base_Precificacao[CATEGORIA],
+			    "ChaveModelo", f_Base_Precificacao[ChaveModelo]  
+			)
+			```
+		lineageTag: 7555021f-c980-4b05-9677-12bc617fa8e6
+
+	measure 'Leads (Faixa 1 - até 65k %)' =
+			
+			
+			var Faixa = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa] = "Faixa 1 - até 65k"))
+			var Total = [Leads ( Faixa | Total | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: a3c6b15f-9ac8-46bf-8ffd-52865f9c0400
+
+	measure 'Leads (Faixa 2 -entre 65k e 80k %)' = ```
+			
+			
+			var Faixa = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa]   = "Faixa 2 - entre 65k e 80k"))
+			var Total = [Leads ( Faixa | Total | N )]
+			
+			RETURN 
+			DIVIDE (Faixa,Total,0)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: e778b33c-00fc-453b-a880-b90327b07d41
+
+	measure 'Leads (Faixa 3 - acima de 80k %)' =
+			
+			
+			var Faixa = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa]  = "Faixa 3 - acima de 80k"))
+			var Total = [Leads ( Faixa | Total | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: d8bbad3e-d696-42c9-8d8d-c844daef9997
+
+	measure 'Leads ( Faixa | Total | N )' =
+			CALCULATE (CALCULATE(
+			    COUNTROWS(VALUES(f_Leads[CodigoLead])),
+			    USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date])
+			), FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa] <> ""))
+		formatString: 0
+		lineageTag: 18124509-1892-4786-a1b1-9f5b8c321968
+
+	measure 'CPL (Meta | Orçamento)' =
+			CALCULATE(
+			    AVERAGE('d_MetaOrçamento'[CPL]),
+			    USERELATIONSHIP('d_Calendário'[mesAno], 'd_MetaOrçamento'[MesAno]))
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 08336047-4c34-44a7-86f2-f909c17ff740
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Agendamentos ( Total Funil | Período | N )' =
+			
+			IF(
+			    _Medidas[OptionSelectedFunil]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Agendamentos[CodigoLead]),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Agendamentos[Date]),
+			         USERELATIONSHIP(d_TipoLead[CodigoLead], f_Agendamentos[CodigoLead])
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Agendamentos),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Agendamentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Agendamentos[CodigoLead])
+			    )
+			)
+		formatString: 0
+		lineageTag: ad9beabb-29dd-4e21-a67d-087116f44d22
+
+	measure OptionSelectedFunil =
+			IF(
+			    NOT(HASONEVALUE('d_SelectionFunil'[Option])),
+			    "",
+			    MAX('d_SelectionFunil'[Value])
+			)
+		lineageTag: 3cf6e854-03e7-444c-8f5a-99ace64d596e
+
+	measure 'Comparecimento ( Total Funil | Período1 | N )' = ```
+			
+			IF(
+			    _Medidas[OptionSelectedFunil]="uClient",
+			    CALCULATE(
+			        DISTINCTCOUNT(f_Comparecimentos[CodigoLead]),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Comparecimentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Comparecimentos[CodigoLead])
+			       
+			       
+			    ),
+			    CALCULATE(
+			        COUNTROWS(f_Comparecimentos),
+			        USERELATIONSHIP('d_Calendário'[Date], f_Comparecimentos[Date]),
+			        USERELATIONSHIP(d_TipoLead[CodigoLead], f_Comparecimentos[CodigoLead])
+			       
+			       
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: eff3fcf8-c17e-4fb7-aa75-8b2cd1c5e3ed
+
+	measure 'Agendamentos ( Total Funil  | Período1 | % )' =
+			
+			DIVIDE(
+			    [Agendamentos ( Total Funil | Período | N )],
+			    [Leads ( Qualificados | Período1 | N )],
+			    0
+			)
+		lineageTag: d87a8088-ce83-4f8c-9d35-f1305e23e7b6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Comparecimento ( Total Funil | Período1 | % )' =
+			
+			DIVIDE(
+			    [Comparecimento ( Total Funil | Período1 | N )],
+			    [Agendamentos ( Total Funil | Período | N )],
+			    0
+			)
+		lineageTag: 3e7bf7d1-2f49-4e48-87fd-419ceaba3c43
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Estoque (Faixa 1 - até 65k)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa R$] = "Faixa 1 - até 65k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: d6733998-1027-42e2-a482-6de0942c4cb8
+
+	measure 'Estoque (Faixa 2 - entre 65k e 80k)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa R$] = "Faixa 2 - entre 65k e 80k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 35634999-d287-4af0-9ca8-bd1721be0cae
+
+	measure 'Estoque (Faixa 3 - acima 80k)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa R$] = "Faixa 3 - acima de 80k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: ac760837-0077-4642-ad85-4f51926e1fc3
+
+	measure 'Vendas (Faixa 1 - até 65k %)' =
+			
+			
+			var Faixa = CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 1 - até 65k" ))
+			var Total = [Venda ( Total | Período 1 | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 9b1f41aa-5136-45e5-b3ad-9dfc1f7e8417
+
+	measure 'Vendas (Faixa 2 - entre 65k e 80k %)' =
+			
+			
+			var Faixa = CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 2 - entre 65k e 80k" ))
+			var Total = [Venda ( Total | Período 1 | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ddd34f22-c748-4bd0-9567-f12ccc7b482b
+
+	measure 'Vendas (Faixa 3 - acima de 80k %)' =
+			
+			
+			var Faixa = CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 3 - acima de 80k" ))
+			var Total = [Venda ( Total | Período 1 | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 8cd1a2f3-0878-4559-97d0-db18e9db5685
+
+	measure 'Dias corridos ( Total | Período 1 | N )' = COUNTROWS('d_Calendário')
+		formatString: 0
+		lineageTag: 40f32a7f-c250-4ecd-b1bb-5502c2d8fcf5
+
+	measure 'Dias M0' = DAY(EOMONTH(MAX('d_Calendário'[Date]),0))
+		formatString: 0
+		lineageTag: 7b4af920-c014-4a26-bdf4-63b8b032189b
+
+	measure 'Investimento Planejado Total ( Budget | Período 1 | N,n )' =
+			
+			var investimentoPlanejado = SUM(d_MetaBudget[Invest Planejado])
+			RETURN investimentoPlanejado
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 2b49ec98-61a7-4f3f-ad11-c24c33439517
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Leads ( Usuarios | Período | N )' =
+			
+			var tbl =  ADDCOLUMNS(
+			    /*DISTINCT (SELECTCOLUMNS(d_Origem,"Midia",d_Origem[Mídia])),*/
+			      DISTINCT (SELECTCOLUMNS('d_Mídia',"Macro",'d_Mídia'[CategoriaMacro])),
+			    "Leads", [Leads ( Total | Período | N )],
+			    "Usuarios", [Usuários ( Total | Período 1 | N )],
+			    "Usuarios Mensal", [Usuários ( Mensal | Período 1 | N )]
+			 )
+			 return SUMX(
+			    FILTER(tbl, [Usuarios] >0),
+			    [Leads]
+			 )
+		formatString: 0
+		lineageTag: 47d21230-7001-449f-a8b8-bcc22f06dc23
+
+	measure 'Conversão ( Vendas NF | Período 1 | % )' = ```
+			DIVIDE (
+			 [VNF + Vendas ( Total | Período1 | N )],
+			 [Leads ( Total | Período | N )],
+			0)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: b6ea0c42-e9d6-42b8-99d8-8b4db4c98d55
+
+	measure 'Conversão ( Usuarios | Período 1 | % )' =
+			DIVIDE(
+			    [Leads ( Usuarios | Período | N )],
+			    [Usuários ( Total | Período 1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2d5c45c8-e4f4-48db-8aa1-b35c6b4a225e
+
+	measure 'Vendas  ( Meta D-1 | Executivo)' =
+			
+			IF(
+			      [Meta ( Vendas D-1 | Intervalo | N )]>0,
+			      [Meta ( Vendas D-1 | Intervalo | N )],
+			      [Vendas  ( Meta | Budget)] * [Fator Proporcional ( D-1 | Periodo | N )]
+			)
+		formatString: #,0
+		lineageTag: 26056ded-810e-4d89-ac18-092fd10c1d3b
+
+	measure 'Dif. Invest. ( Real vs Planejado ) 2' =
+			CALCULATE (
+			    [Investimento Realizado ( Total | Período 1 | N,n )]-[Investimento Planejado ( Executivo | Período 1 | N,n )],
+			    FILTER (f_InvestimentoRealizado, f_InvestimentoRealizado[Tipo] = "Performance")
+			    /*,FILTER ('d_Calendário', 'd_Calendário'[Periodo] <> "")*/
+			    )
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: eb6f8ad6-301a-4a38-882b-2d991a84e8f3
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Conversão ( Usuarios Mensal | Período 1 | % )' =
+			DIVIDE(
+			    [Leads ( Usuarios | Período | N )],
+			    [Usuários ( Mensal | Período 1 | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 20342583-e592-440d-910f-b9ce534ee728
+
+	measure 'Estoque Preço Mínimo (Faixa 1 - até 65k %)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 1 - até 65k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 349e3a15-ea70-475a-b64c-0643a1367fd1
+
+	measure 'Estoque Preço Mínimo (Faixa 2 - entre 65k e 80k %)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 2 - entre 65k e 80k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 772d9c48-1b8f-4601-9b83-62142511860f
+
+	measure 'Estoque Preço Mínimo (Faixa 3 - acima 80k %)' =
+			
+			
+			var Faixa = CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 3 - acima de 80k"))
+			var Total = [Volume Estoque ( Placas | Período | N )]
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 6c8daa2e-24bd-4c5d-9096-1700f50dace5
+
+	measure 'Leads ( Faixa Preço Mínimo | Total | N )' =
+			CALCULATE (CALCULATE(
+			    COUNTROWS(VALUES(f_Leads[CodigoLead])),
+			    USERELATIONSHIP('d_Calendário'[Date], f_Leads[Date])
+			), FILTER(f_LeadFaixaPrecoMinimo, f_LeadFaixaPrecoMinimo[Faixa Preço Mínimo] <> ""))
+		formatString: 0
+		lineageTag: d7ab5c0a-a3df-4045-aa09-d0c4ee5719d2
+
+	measure 'Leads Preço Mínimo (Faixa 1 - até 65k)' =
+			
+			
+			var Faixa = CALCULATE([Leads ( Faixa Preço Mínimo | Total | N )], FILTER(f_LeadFaixaPrecoMinimo, f_LeadFaixaPrecoMinimo[Faixa Preço Mínimo] = "Faixa 1 - até 65k"))
+			var Total = [Leads ( Faixa Preço Mínimo | Total | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 504c3313-208b-4703-b9bb-dda3a182ea83
+
+	measure 'Leads Preço Mínimo (Faixa 2 - entre 65k e 80k)' =
+			
+			
+			var Faixa = CALCULATE([Leads ( Faixa Preço Mínimo | Total | N )], FILTER(f_LeadFaixaPrecoMinimo, f_LeadFaixaPrecoMinimo[Faixa Preço Mínimo] = "Faixa 2 - entre 65k e 80k"))
+			var Total = [Leads ( Faixa Preço Mínimo | Total | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: b730f568-e995-4e33-a05b-0dde4f57afe7
+
+	measure 'Leads Preço Mínimo (Faixa 3 - acima de 80k)' =
+			
+			
+			var Faixa = CALCULATE([Leads ( Faixa Preço Mínimo | Total | N )], FILTER(f_LeadFaixaPrecoMinimo, f_LeadFaixaPrecoMinimo[Faixa Preço Mínimo] = "Faixa 3 - acima de 80k"))
+			var Total = [Leads ( Faixa Preço Mínimo | Total | N )]
+			
+			RETURN DIVIDE (Faixa,Total,0)
+		formatString: 0%;-0%;0%
+		lineageTag: 2b83021b-ae8b-4f49-8b5e-f9130b446210
+
+	measure 'Conversão ( Site sem Regional | Período 1 | % )' =
+			CALCULATE(
+			    [Conversão ( Site | Período 1 | % )],
+			    ALL(d_Lojas[Regional])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 10da0f83-5baa-467b-acfa-3aca38488dea
+
+	measure 'Investimento Planejado ( Executivo | Total Mês| N,n )' =
+			
+			IF(
+			    [Investimento Planejado ( Total Mês | Período 1 | N,n )] > 0,
+			   [Investimento Planejado ( Total Mês | Período 1 | N,n )] ,
+			    [Investimento Planejado Total ( Budget | Período 1 | N,n )]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 626fed44-7137-4c6c-8618-ad54a3cfa16d
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Leads (Faixa 1 - até 65k / N)' = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa] = "Faixa 1 - até 65k"))
+		formatString: 0
+		lineageTag: acec83c1-2661-4f8e-a794-4ea7a894373b
+
+	measure 'Leads (Faixa 2 - entre 65k e 80k N)' = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa] = "Faixa 2 - entre 65k e 80k"))
+		formatString: 0
+		lineageTag: 89e65aa9-0583-4f47-9146-08c1639ed6f6
+
+	measure 'Leads (Faixa 3 - acima de 80k)' = CALCULATE([Leads ( Total | Período | N )], FILTER(f_LeadFaixaPrecoChamada, f_LeadFaixaPrecoChamada[Faixa] = "Faixa 3 - acima de 80k"))
+		formatString: 0
+		lineageTag: e9118413-9c9c-4ca7-9d76-5810337ce73c
+
+	measure 'Vendas (Faixa 1 - até 65k)' =
+			
+			CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 1 - até 65k" ))
+		formatString: 0
+		lineageTag: 7d8cc193-8131-428a-ab9f-100b132a822a
+
+	measure 'Vendas (Faixa 2 - entre 65k e 80k)' =
+			
+			CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 2 - entre 65k e 80k" ))
+		formatString: 0
+		lineageTag: e2eff29f-7e41-41dd-a939-f17de1c2fefd
+
+	measure 'Vendas (Faixa 3 - acima de 80k)' =
+			
+			CALCULATE([Venda ( Total | Período 1 | N )], FILTER(f_Vendas, f_Vendas[Faixa]= "Faixa 3 - acima de 80k" ))
+		formatString: 0
+		lineageTag: 1c43e267-e831-4b52-9574-64db9f266df6
+
+	measure 'Estoque Preço Mínimo (Faixa 1 - até 65k)' =
+			
+			CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 1 - até 65k"))
+		formatString: 0
+		lineageTag: ab272245-c70b-45db-93b6-a1a2b2a14381
+
+	measure 'Estoque Preço Mínimo (Faixa 2 - entre 65k e 80k N)' =
+			
+			CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 2 - entre 65k e 80k"))
+		formatString: 0
+		lineageTag: 2cb33869-68ac-4447-b12c-26b343d6e1b3
+
+	measure 'Estoque Preço Mínimo (Faixa 3 - acima 80k N)' =
+			
+			CALCULATE([Volume Estoque ( Placas | Período | N )], FILTER(f_Base_Precificacao, f_Base_Precificacao[Faixa Preço Mínimo] = "Faixa 3 - acima de 80k"))
+		formatString: 0
+		lineageTag: 65f77a46-96c9-4172-849c-95cad46a8e7a
+
+	measure 'Leads M-1' = ```
+			
+			VAR Data =
+			    MAX ( 'd_CalendárioApoio'[Date] )
+			VAR DataInicioM1 =
+			    EOMONTH ( Data, -2 ) + 1
+			VAR DataFimM1 =
+			    EOMONTH ( Data, -1 )
+			RETURN
+			    CALCULATE (
+			        [Leads ( Total | Período | N )],
+			        FILTER (
+			            ALL ( 'd_Calendário' ),
+			            'd_Calendário'[Date] >= DataInicioM1
+			                && 'd_Calendário'[Date] <= DataFimM1
+			        )
+			    )
+			 
+			```
+		formatString: 0
+		lineageTag: 2d53ae93-4bff-4f2f-8742-2d220e01efac
+
+	partition _Medidas-9086738c-412e-4ae6-b4c6-8ee49f14fd2f = m
+		mode: import
+		queryGroup: Acesso
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado",{"Coluna 1"})
+				in
+				    #"Colunas Removidas"
+
+	annotation PBI_ResultType = Table
+

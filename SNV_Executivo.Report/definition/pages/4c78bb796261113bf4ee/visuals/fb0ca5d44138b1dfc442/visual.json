@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "fb0ca5d44138b1dfc442",
+  "position": {
+    "x": 0,
+    "y": 691.6182572614108,
+    "z": 1000,
+    "height": 28.381742738589214,
+    "width": 1280.1659751037346,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Desenvolvido por Marketing - Mídia e BI Unidas - Data da última atualização: ",
+                    "textStyle": {
+                      "color": "#ffffff"
+                    }
+                  },
+                  {
+                    "value": {
+                      "propertyIdentifier": {
+                        "objectName": "values",
+                        "propertyName": "expr"
+                      },
+                      "selector": {
+                        "id": "Valor"
+                      }
+                    },
+                    "textStyle": {
+                      "color": "#ffffff"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "expr": {
+              "expr": {
+                "Min": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "Subquery": {
+                          "Query": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "_",
+                                "Entity": "_Medidas",
+                                "Type": 0
+                              }
+                            ],
+                            "Select": [
+                              {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "_"
+                                    }
+                                  },
+                                  "Property": "Atualização"
+                                },
+                                "Name": "_Medidas.Atualização"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "Property": "_Medidas.Atualização"
+                    }
+                  },
+                  "IncludeAllTypes": 1
+                },
+                "Annotations": {
+                  "NaturalLanguage": {
+                    "version": 1,
+                    "kind": "NaturalLanguage",
+                    "annotation": {
+                      "name": "Valor",
+                      "utterance": "atualização"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "Valor"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#005B9E'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

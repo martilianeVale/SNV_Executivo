@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SNV_Executivo"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ca33f346-ba13-4ba2-9570-ad381427c5c5"
+  }
+}

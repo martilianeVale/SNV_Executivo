@@ -1,0 +1,51 @@
+table f_Comparecimentos
+	lineageTag: 17174875-21d5-4ff2-9c8b-2053fbc7b7cb
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f93e42d-eecb-4e0b-ac71-8a6654e5383a
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoUnidade
+		dataType: string
+		lineageTag: f5562e32-0532-4404-b767-94bceaf60907
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: 720db0cd-ec0b-40f0-8526-65669cbcde67
+		summarizeBy: none
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a3de00f1-322c-4588-9ae2-4a232f529312
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Comparecimentos = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)#(tab)#(tab)Comparecimento.CodigoLead#(lf)#(tab)#(tab),Unidade.CodigoUnidade#(lf)#(tab)#(tab),Lead.CodigoMidia#(lf)#(tab)#(tab),Comparecimento.Date#(lf)#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_LeadEvento] as Comparecimento#(lf)LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_LeadStatic] as Lead on Lead.CodigoLead = Comparecimento.CodigoLead#(lf)LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_VwLeadUnidade] as Unidade on Unidade.CodigoLead = Comparecimento.CodigoLead and Loja = 'Atual'#(lf)Where TipoEvento = 'Comparecimento'#(lf)and Comparecimento.Date>= '20240101'"])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

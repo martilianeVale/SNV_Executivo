@@ -1,0 +1,35 @@
+table d_MetaOrçamento
+	lineageTag: beb94359-a0df-4464-bc2d-61f5d2e412e8
+
+	column MesAno
+		dataType: string
+		lineageTag: 9dc40545-ab77-4630-b312-c8efd2273daf
+		summarizeBy: none
+		sourceColumn: MesAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column CPL
+		dataType: double
+		lineageTag: 34c67c8a-84e0-45c6-95d2-ee485479564a
+		summarizeBy: sum
+		sourceColumn: CPL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition d_MetaOrçamento = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bc65DcBACADBXoiRzGP81ILov4271FqnE023mB9hUaKSpimjm4KUpJN0kW7SQ3pBbiRW/adaX5oF", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [MesAno = _t, CPL = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"MesAno", type text}, {"CPL", type number}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

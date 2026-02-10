@@ -1,0 +1,38 @@
+table d_Atualização
+	isHidden
+	lineageTag: 8383a752-2699-4374-9598-f9a6bc7cd988
+
+	column d_Atualização
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fd554032-97d4-4592-a59d-318626a6c7a8
+		summarizeBy: none
+		sourceColumn: d_Atualização
+
+		variation Variation
+			isDefault
+			relationship: 3df54793-2476-4004-8263-fb510cf10460
+			defaultHierarchy: LocalDateTable_1194f7d8-af4d-4aa7-9180-1ed2059227de.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Atualização-0596fd3d-2c58-461f-9ad3-0e03752f4acb = m
+		mode: import
+		queryGroup: Dimensão
+		source = ```
+				let
+				    Source = #table(
+				        {"d_Atualização"}, 
+				        {{DateTimeZone.SwitchZone(DateTimeZone.FixedUtcNow(), -3)}}
+				    ),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Source, {{"d_Atualização", type datetime}})
+				in
+				    #"Tipo Alterado"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

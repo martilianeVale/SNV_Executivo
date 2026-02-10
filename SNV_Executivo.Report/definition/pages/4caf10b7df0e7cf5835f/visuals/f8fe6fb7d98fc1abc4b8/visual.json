@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "f8fe6fb7d98fc1abc4b8",
+  "position": {
+    "x": 165,
+    "y": 145,
+    "z": 3000,
+    "height": 25,
+    "width": 325,
+    "tabOrder": 39000
+  },
+  "visualGroup": {
+    "displayName": "Comparecimentos",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "c2f43e3a866e5ec49ebe"
+}

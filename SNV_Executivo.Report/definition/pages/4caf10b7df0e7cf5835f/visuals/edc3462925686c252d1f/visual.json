@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "edc3462925686c252d1f",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 260,
+    "width": 500,
+    "tabOrder": 15000
+  },
+  "visualGroup": {
+    "displayName": "Fundo",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "c2f43e3a866e5ec49ebe"
+}

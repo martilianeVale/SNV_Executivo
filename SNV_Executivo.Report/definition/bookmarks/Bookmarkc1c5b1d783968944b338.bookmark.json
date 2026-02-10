@@ -1,0 +1,106 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
+  "displayName": "Controle",
+  "name": "Bookmarkc1c5b1d783968944b338",
+  "options": {
+    "targetVisualNames": []
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "ReportSection3e42d88dcee85edd816b",
+    "sections": {
+      "ReportSection3e42d88dcee85edd816b": {
+        "filters": {
+          "byExpr": [
+            {
+              "name": "Filtera43d537ac70786b2920a",
+              "type": "Categorical",
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "s",
+                    "Entity": "SelectionOptions",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "s"
+                                }
+                              },
+                              "Property": "Selection"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "'Controle'"
+                              }
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "expression": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SelectionOptions"
+                    }
+                  },
+                  "Property": "Selection"
+                }
+              },
+              "howCreated": 1
+            }
+          ]
+        },
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "34f57ad76ead0c7bc1a2": {
+            "isHidden": true
+          },
+          "b3cc743aef8da4c464c9": {
+            "isHidden": false
+          },
+          "e6ef4c756a2bc8372a23": {
+            "isHidden": true
+          },
+          "6eb9dc4f2f490beedad7": {
+            "isHidden": false
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

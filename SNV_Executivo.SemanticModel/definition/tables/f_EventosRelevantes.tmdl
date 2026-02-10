@@ -1,0 +1,47 @@
+table f_EventosRelevantes
+	lineageTag: d11805c7-42d6-4607-acc0-b8426797bf96
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7581d0e2-9178-4d49-acc5-0be50c4b5da5
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Evento
+		dataType: string
+		lineageTag: d16b71bf-8564-434d-87e9-2a1c151ee691
+		summarizeBy: none
+		sourceColumn: Evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observação
+		dataType: string
+		lineageTag: 27261a72-aa8e-449c-b89c-742152d1602a
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_EventosRelevantes-1fe253fc-8a8a-4589-a431-9cd517b248ed = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf) Cast ( Data as date) as Data#(lf),Evento#(lf),Observação#(lf)FROM  [MKT_Warehouse].[dbo].[INS_f_EventosRelevantes] #(lf)WHERE BU='Snv' and Data >= '20240101'"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Data", type date}, {"Evento", type text}, {"Observação", type text}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"Data", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

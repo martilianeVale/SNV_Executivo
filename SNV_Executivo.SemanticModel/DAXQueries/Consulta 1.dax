@@ -1,0 +1,8 @@
+EVALUATE
+ ADDCOLUMNS(
+    DISTINCT (SELECTCOLUMNS('d_Mídia',"Macro",'d_Mídia'[CategoriaMacro])),
+    "Leads", [Leads ( Total | Período | N )],
+    "Usuarios", [Usuários ( Total | Período 1 | N )]
+ )
+
+  

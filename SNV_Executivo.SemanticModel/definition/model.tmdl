@@ -1,0 +1,73 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Acesso
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Dimensão
+
+	annotation PBI_QueryGroupOrder = 6
+
+queryGroup Fato
+
+	annotation PBI_QueryGroupOrder = 7
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["d_Calendário","d_CalendárioApoio","d_InvestimentoPlanejado","f_Leads","f_Vendas","d_Mídia","_Medidas","f_EventosRelevantes","f_Deploy","f_Metas","d_Origem","d_OrigensGenéricas","f_InvestimentoRealizado","f_Analytics","_Medidas_Análises","_Medidas_Campanha","d_Atualização","f_Analytics_Monthly","f_QuantidadeLojas","d_Objetivo","d_MetaBudget","d_Lojas","f_LeadUnidade","d_Selection","f_StatusFichaVenda","f_Agendamentos","f_Comparecimentos","d_TipoLead","f_Base_Precificacao","d_CategoriaSimples","z_De_Para_Modelo","d_VeículosModelos","d_CategoriaPrecificação","f_LeadFaixaPrecoMinimo","f_LeadFaixaPrecoChamada","d_MetaOrçamento","d_SelectionFunil","MKT_Warehouse","Database"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table DateTableTemplate_f2b7bca2-697b-4ba8-bab9-088ec2cd878a
+ref table _Medidas
+ref table d_InvestimentoPlanejado
+ref table f_Leads
+ref table f_Vendas
+ref table d_Mídia
+ref table f_EventosRelevantes
+ref table f_Deploy
+ref table f_Metas
+ref table d_Origem
+ref table f_InvestimentoRealizado
+ref table f_Analytics
+ref table d_OrigensGenéricas
+ref table _Medidas_Análises
+ref table _Medidas_Campanha
+ref table d_SelectDays
+ref table d_Atualização
+ref table f_Analytics_Monthly
+ref table d_Calendário
+ref table LocalDateTable_7c65c731-b396-4b83-8129-66cc82d23e59
+ref table d_CalendárioApoio
+ref table LocalDateTable_3561fc87-7b77-416e-8afc-4e3d62b53e4b
+ref table f_QuantidadeLojas
+ref table d_Objetivo
+ref table d_MetaBudget
+ref table d_Lojas
+ref table f_LeadUnidade
+ref table d_Selection
+ref table f_StatusFichaVenda
+ref table f_Agendamentos
+ref table f_Comparecimentos
+ref table d_TipoLead
+ref table f_Base_Precificacao
+ref table d_CategoriaSimples
+ref table z_De_Para_Modelo
+ref table d_VeículosModelos
+ref table d_CategoriaPrecificação
+ref table f_LeadFaixaPrecoMinimo
+ref table d_MetaOrçamento
+ref table LocalDateTable_1194f7d8-af4d-4aa7-9180-1ed2059227de
+ref table d_SelectionFunil
+ref table LocalDateTable_fde03d2b-af4c-4ea4-bdde-f2b83380df39
+ref table f_LeadFaixaPrecoChamada
+ref table LocalDateTable_34eedf04-2c4b-4d5e-9dea-ab23e7580ea0
+
+ref cultureInfo pt-BR
+

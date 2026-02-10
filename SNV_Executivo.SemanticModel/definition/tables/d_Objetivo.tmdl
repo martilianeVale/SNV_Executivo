@@ -1,0 +1,48 @@
+table d_Objetivo
+	lineageTag: 20cca440-8dcd-4192-b504-b251bc4026df
+
+	column Sigla
+		dataType: string
+		lineageTag: 9ec853e9-e64c-45b8-bf5b-e98671ba8525
+		summarizeBy: none
+		sourceColumn: Sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column Objetivo
+		dataType: string
+		lineageTag: a412c0bc-8386-40d0-969e-121637111ebf
+		summarizeBy: none
+		sourceColumn: Objetivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Performance
+		dataType: string
+		lineageTag: 60ed9b62-42c8-4f86-9e4a-595d709131ce
+		summarizeBy: none
+		sourceColumn: Performance
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: b339c1d4-0b98-4f71-beb5-359e82df6202
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Objetivo = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT * FROM [MKT_Warehouse].[dbo].[INS_d_TaxonomiaObjetivo]"])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

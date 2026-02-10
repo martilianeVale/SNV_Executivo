@@ -1,0 +1,48 @@
+table f_Analytics_Monthly
+	lineageTag: 5eeb1dfe-4ba6-4428-b62b-21e0b27fb6e2
+
+	column mesAno
+		dataType: string
+		lineageTag: 5f4ac0a2-dc06-4d57-aa26-57437c893c02
+		summarizeBy: none
+		sourceColumn: mesAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column users
+		dataType: int64
+		formatString: 0
+		lineageTag: 31825231-0e44-4ece-9e8f-ac6c2c8c07b9
+		summarizeBy: sum
+		sourceColumn: users
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem
+		dataType: string
+		lineageTag: b34fb320-e20f-40f3-96e2-f83b55ff5aca
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Analytics_Monthly-726a2880-1d94-4873-89c7-801c96959b6a = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT#(lf)        date#(lf)        ,users#(lf)        ,origem#(lf)FROM [MKT_Warehouse].[dbo].[INS_f_UserMonthly]#(lf)WHERE BU = 'SNV'#(lf)and origem not in ('Blog', 'Atacado', 'Outros')#(lf)and date >= '20240101'#(lf)ORDER BY date DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"date", type date}}),
+				    #"Dividir Coluna por Delimitador" = Table.SplitColumn(Table.TransformColumnTypes(#"Tipo Alterado", {{"date", type text}}, "pt-BR"), "date", Splitter.SplitTextByEachDelimiter({"01/"}, QuoteStyle.Csv, false), {"date.1", "mesAno"}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Dividir Coluna por Delimitador",{{"mesAno", type text}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado1",{"mesAno", "users", "origem"}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Outras Colunas Removidas","Site","Site Unidas",Replacer.ReplaceValue,{"origem"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído","LP Inauguração Santo André","LP Inauguração Loja",Replacer.ReplaceText,{"origem"}),
+				    #"Valor Substituído2" = Table.ReplaceValue(#"Valor Substituído1","LP Inauguração Anhaia Mello","LP Inauguração Loja",Replacer.ReplaceValue,{"origem"})
+				in
+				    #"Valor Substituído2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

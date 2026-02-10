@@ -1,0 +1,204 @@
+table _Medidas_Análises
+	lineageTag: 2ff372db-e453-42ce-a008-b9eebf891cea
+
+	measure 'Atingimento meta conversão' =
+			
+			IF(
+			    [Conversão ( Acumulado | Período | % )] >= [Meta ( Conversão | Periodo | % )],
+			    1,
+			    0
+			)
+		lineageTag: 8d64fd4e-3be4-4247-b2ca-8b72870af59f
+
+	measure 'Atingimento meta conversão ( % )' =
+			
+			DIVIDE(
+			    [Conversão ( Acumulado | Período | % )],
+			    [Meta ( Conversão | Periodo | % )],
+			    0
+			)
+		lineageTag: 7a286496-86e4-4b40-91fe-552a9ea22c6e
+
+	measure 'Atingimento meta leads' =
+			
+			IF(
+			    [Leads ( Projetado | Intervalo | N )] >= [Meta ( Leads | Periodo | N )],
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: b3a7c648-0a06-4348-8b6a-e3f615ccdbc6
+
+	measure 'Atingimento meta leads ( % )' =
+			
+			DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    [Meta ( Leads | Periodo | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3b6f9af4-8131-4afe-841f-b6106c882ded
+
+	measure 'Atingimento meta vendas' =
+			
+			IF(
+			    [Venda ( Projetada | Período 1 | N )] >= [Meta ( Venda | Periodo | N )],
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: 3817b0ca-3983-4ab3-ab8d-1912f6c2b58c
+
+	measure 'Atingimento meta vendas ( % )' =
+			
+			DIVIDE(
+			    [Venda ( Total | Período 1 | N )],
+			    [Meta ( Venda | Periodo | N )],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f6a8aeed-4b6e-4342-9116-538c9af42c88
+
+	measure 'Leads por vendedor por dia' =
+			
+			DIVIDE(
+			    DIVIDE(
+			        [Leads ( Total | Período | N )],
+			        [Vendedores ( Total por loja | Período | N )],
+			        0
+			    ),
+			    [Dias ( Dias corridos no intervalo | Intervalo | N )],
+			    0
+			)
+		lineageTag: 115a5b41-2415-48c6-8282-0759658b63ab
+
+	measure MaxValueConversãoKPI =
+			
+			IF(
+			    [Meta ( Conversão | Periodo | % )] > [Conversão ( Acumulado | Período | % )],
+			    [Meta ( Conversão | Periodo | % )],
+			    [Conversão ( Acumulado | Período | % )]
+			)
+		lineageTag: c38b5444-ba89-4a07-b1a8-e17e1fda45d6
+
+	measure MaxValueLeadsKPI =
+			
+			IF(
+			    [Meta ( Leads | Periodo | N )] > [Leads ( Projetado | Intervalo | N )],
+			    [Meta ( Leads | Periodo | N )],
+			    [Leads ( Projetado | Intervalo | N )]
+			)
+		lineageTag: 32429ef5-dc8b-4f2c-880a-f2c8df79af5d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MaxValueVendasKPI =
+			
+			IF(
+			    [Meta ( Venda | Periodo | N )]> [Venda ( Projetada | Período 1 | N )],
+			    [Meta ( Venda | Periodo | N )],
+			    [Venda ( Projetada | Período 1 | N )]
+			)
+		lineageTag: 182581d0-d145-4eb6-9bed-a8aafd3fbb97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Razão leads por estoque' =
+			
+			DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    [Estoque ( Veículos | D-1 | N )],
+			    "-"
+			)
+		lineageTag: 728d0267-a156-43ea-b8c1-4ba88d44cc3c
+
+	measure 'Razão leads por venda' =
+			
+			DIVIDE(
+			    [Leads ( Total | Período | N )],
+			    [Venda ( Total | Período 1 | N )],
+			    BLANK()
+			)
+		lineageTag: cbdf76b2-ae89-456b-bdf0-3e5c8245e1e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Título da página' =
+			
+			IF(
+			    HASONEFILTER(d_Lojas[Loja]),
+			    MAX(d_Lojas[Loja]),
+			    IF(
+			        HASONEFILTER(d_Lojas[Regional]),
+			        MAX(d_Lojas[Regional]),
+			        "GERAL"
+			    )
+			)
+		lineageTag: 680543ab-8ffd-42e8-8cf7-1788b836a794
+
+	measure 'Investimento Realizado (para exportar)' =
+			
+			SUM(f_InvestimentoRealizado[Cost])
+		formatString: 0.000000
+		lineageTag: 6677697f-20f8-4bac-a66e-d4bb10fc3364
+
+	measure 'Num dias mês ( Total | Período 1 | N )' =
+			
+			DAY(EOMONTH(MAX('d_Calendário'[Date]), 0))
+		formatString: 0
+		lineageTag: daf9f102-371d-4e9a-bd9d-c21945470596
+
+	measure 'Progresso mês (%)' = [Dias ( Dias corridos no intervalo | Intervalo | N )] / [Dias ( Quantidade do mês no intervalo | Periodo | N )]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bb5a97ae-88d0-4202-b687-da1ae0c369ea
+
+	measure 'Dif real vs meta ( Leads | Periodo | N )' =
+			
+			[Leads ( Total | Período | N )] - [Meta ( Leads | Periodo | N )]
+		lineageTag: 8af1a308-6f65-40ab-b692-4dd6db2a583e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dif real vs meta ( Vendas | Periodo | N )' =
+			
+			[Venda ( Total | Período 1 | N )] - [Meta ( Venda | Periodo | N )]
+		formatString: 0
+		lineageTag: e24d4b6c-a008-4669-ab1a-7e8b9ed4c4ac
+
+	measure '% Leads Site' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        [Leads ( Total | Período | N )],
+			        'd_Mídia'[CategoriaMacro] = "Site"
+			    ),
+			    [Leads ( Total | Período | N )],
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: a7f7b7b4-ef45-4c56-9970-8becce56cf8f
+
+	column 'Coluna 1'
+		dataType: string
+		isHidden
+		lineageTag: ff49fed2-1d08-4336-9575-05fd988ff793
+		summarizeBy: none
+		sourceColumn: Coluna 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas_Análises-1ca46c85-d4c6-4e12-a42c-f674967b1669 = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

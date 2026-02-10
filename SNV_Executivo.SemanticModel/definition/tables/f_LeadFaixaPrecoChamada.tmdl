@@ -1,0 +1,35 @@
+table f_LeadFaixaPrecoChamada
+	lineageTag: 189d5d3d-cc3f-434b-9b5f-27983a62b097
+
+	column CodigoLead
+		dataType: int64
+		lineageTag: 3e050d04-0fe6-41c7-9c7d-2e3e5374ee4a
+		summarizeBy: none
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Faixa
+		dataType: string
+		lineageTag: de5eccd8-3881-49d2-b934-76497444dcd0
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_LeadFaixaPrecoChamada = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT  #(lf)         Placa.CodigoLead#(lf)        ,Placa.Faixa#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_LeadPlaca] as Placa#(lf)Left join SNV_f_LeadStatic as Lead on Lead.CodigoLead= Placa.CodigoLead#(lf)Where Date>= '20240101'"]),
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each ([Faixa] <> "Faixa 0"))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

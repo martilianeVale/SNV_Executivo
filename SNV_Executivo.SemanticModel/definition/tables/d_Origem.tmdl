@@ -1,0 +1,46 @@
+table d_Origem
+	lineageTag: 4d3cf375-fa5b-4371-97ef-2e1901b0051d
+
+	column Origem
+		dataType: string
+		lineageTag: cab1e19e-263f-4aa1-8a65-8d9b3b400ac6
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mídia
+		dataType: string
+		lineageTag: 78c879da-6ec0-4b8c-aaf3-bc959b6fa0fe
+		summarizeBy: none
+		sourceColumn: Mídia
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: 060ecee9-2a10-4121-a719-49cdb93aea36
+		summarizeBy: none
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Origem-93cdd1e2-6047-45fe-a718-2451195049b5 = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)         Origem#(lf)        ,Mídia#(lf)FROM [MKT_Warehouse].[dbo].[INS_d_Origem]#(lf)Where BU = 'SNV'"]),
+				    #"Consulta Acrescentada" = Table.Combine({Fonte, d_OrigensGenéricas}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Consulta Acrescentada", each ([Mídia] <> "")),
+				    #"Consultas Mescladas" = Table.NestedJoin(#"Linhas Filtradas", {"Mídia"}, d_Mídia, {"Mídia"}, "d_Mídia", JoinKind.LeftOuter),
+				    #"d_Mídia Expandido" = Table.ExpandTableColumn(#"Consultas Mescladas", "d_Mídia", {"CodigoMidia"}, {"CodigoMidia"}),
+				    #"Linhas Classificadas" = Table.Sort(#"d_Mídia Expandido",{{"Origem", Order.Ascending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,40 @@
+table d_OrigensGenéricas
+	isHidden
+	lineageTag: 1fcb999e-f63c-400f-b59a-259874fac002
+
+	column Origem
+		dataType: string
+		isHidden
+		lineageTag: f2271823-72a7-4c8e-9497-65a90d84f8fc
+		summarizeBy: none
+		sourceColumn: Origem
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mídia
+		dataType: string
+		lineageTag: 4a5ed6b6-eb9b-4118-a14f-ca73ea3a09df
+		summarizeBy: none
+		sourceColumn: Mídia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_OrigensGenéricas-6f91dd41-f67e-44b2-8d00-ce6578a4e69b = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Table.SelectColumns(d_Mídia,{"Mídia"}),
+				    #"Duplicatas Removidas" = Table.Distinct(Fonte),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Duplicatas Removidas", "Origem", each Text.Combine({"IN",[Mídia]},"-"))
+				in
+				    #"Personalização Adicionada"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

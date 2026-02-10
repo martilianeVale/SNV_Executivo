@@ -1,0 +1,103 @@
+table f_Vendas
+	lineageTag: 3e9f1899-9e59-4f4b-bf20-8048b5ddf292
+
+	column Date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: da90c008-dab8-44f3-b5f1-76c0ac3dfd44
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Venda
+		dataType: int64
+		formatString: 0
+		lineageTag: becaf445-0f1f-4328-a8c9-1f3da8595a26
+		summarizeBy: sum
+		sourceColumn: Venda
+
+		annotation SummarizationSetBy = Automatic
+
+	column Receita
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: 3eeb802b-f798-4b09-a94b-2ce54effa83c
+		summarizeBy: sum
+		sourceColumn: Receita
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: 89fbf1fe-6ad2-44a9-ab97-39bcd61b24c9
+		summarizeBy: none
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: a21ea386-f87b-46ce-aca9-b303a821ffd6
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column Placa
+		dataType: string
+		lineageTag: 9c9dcbcc-ad18-42e7-9df4-4706b7b95ffd
+		summarizeBy: none
+		sourceColumn: Placa
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoUnidade
+		dataType: int64
+		formatString: 0
+		lineageTag: f28aaec8-a35d-4c47-bcf4-83b6b9afccbd
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoModelo
+		dataType: int64
+		formatString: 0
+		lineageTag: 21e6b7a7-cc7f-4cfb-9e30-ecebbd108e29
+		summarizeBy: none
+		sourceColumn: CodigoModelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa
+		dataType: string
+		lineageTag: a9b854b3-9f7c-4966-a244-118bdd96fdfb
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Vendas-d0c7cb35-a1bb-4519-9aaf-1e69a6babe5b = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT Data as 'Date'#(lf)#(tab),SUM([Vendas]) as 'Venda'#(lf)#(tab),SUM([Vlr. Venda]) as 'Receita'#(lf)    ,Case when #(lf)       [Vlr. Venda]  = 0 then 'Faixa 0'#(lf)        when [Vlr. Venda] <= 65000 then 'Faixa 1 - até 65k' #(lf)        when [Vlr. Venda]  <= 80000 then 'Faixa 2 - entre 65k e 80k'#(lf)        when [Vlr. Venda]   > 80000 then 'Faixa 3 - acima de 80k' else 'Não Informado'#(lf)       end as 'Faixa'#(lf)#(tab),Midia.[CodigoMidia]#(lf)    ,Midia.[CodigoLead]#(lf),Venda.[Placa]#(lf),Venda.[CodigoUnidade]#(lf),Venda.[CodigoModelo]#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_Vendas] as Venda#(lf)    LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_MidiaVendas] as Midia on Midia.CodigoVenda = Venda.CodigoVenda#(lf)        and Midia.TipoMovimentacao = Venda.Vendas#(lf)Where Data >= '20240101' #(lf)GROUP BY Data, Midia.CodigoMidia, Midia.[CodigoLead], Venda.[Placa], Venda.[CodigoUnidade] ,Venda.[CodigoModelo], Case when #(lf)       [Vlr. Venda]  = 0 then 'Faixa 0'#(lf)        when [Vlr. Venda] <= 65000 then 'Faixa 1 - até 65k' #(lf)        when [Vlr. Venda]  <= 80000 then 'Faixa 2 - entre 65k e 80k'#(lf)        when [Vlr. Venda]   > 80000 then 'Faixa 3 - acima de 80k' else 'Não Informado'#(lf)       end #(lf)ORDER BY Data DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}, {"Venda", Int64.Type}, {"Receita", Currency.Type}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,41 @@
+table f_LeadUnidade
+	lineageTag: f65dfcbb-f8eb-4a91-90cd-d4dee00597df
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: 55b0415d-4295-4778-aab0-f3f971389cd4
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loja
+		dataType: string
+		lineageTag: e03ae55d-faa7-4cf0-affc-da822b56b108
+		summarizeBy: none
+		sourceColumn: Loja
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoUnidade
+		dataType: string
+		lineageTag: 56823e78-a4bd-406c-ab12-7ba9247e38aa
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_LeadUnidade = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)Unidade.CodigoLead#(lf),Unidade.CodigoUnidade#(lf),Unidade.Loja#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_VwLeadUnidade] as Unidade#(lf)LEFT JOIN SNV_f_LeadStatic as Lead on Lead.CodigoLead = Unidade.CodigoLead#(lf)Where Date >= '20240101'"])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

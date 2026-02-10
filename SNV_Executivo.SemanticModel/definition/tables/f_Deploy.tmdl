@@ -1,0 +1,54 @@
+table f_Deploy
+	lineageTag: 8db05fa2-5344-488b-9244-be911954b9d0
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8c282b19-4fc7-4721-805b-acae46f0e3a2
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Evento
+		dataType: string
+		lineageTag: 1ca2ba29-df4e-4670-b613-e3c02d95c7a7
+		summarizeBy: none
+		sourceColumn: Evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sprint
+		dataType: string
+		lineageTag: b0b733cd-582e-4323-92f6-774cf4b4b17a
+		summarizeBy: none
+		sourceColumn: Sprint
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observações
+		dataType: string
+		lineageTag: 4b140d06-d8c1-4ef9-bc10-b1c2f2828487
+		summarizeBy: none
+		sourceColumn: Observações
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Deploy-fb150b88-5d19-4bc4-8ee2-0d1fb2fd18ec = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT [Data]#(lf)      ,[Evento]#(lf)      ,Evento as [Sprint]#(lf)      ,Observação as [Observações]#(lf)   #(lf)FROM  [MKT_Warehouse].[dbo].[INS_f_EventosRelevantes] #(lf)WHERE BU='Snv' and Data >= '20240101' and Categoria = 'Gmud Sites/App'"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Data", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

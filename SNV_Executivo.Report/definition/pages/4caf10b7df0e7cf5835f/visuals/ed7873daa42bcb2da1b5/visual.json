@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "ed7873daa42bcb2da1b5",
+  "position": {
+    "x": 165,
+    "y": 75,
+    "z": 5000,
+    "height": 25,
+    "width": 325,
+    "tabOrder": 43000
+  },
+  "visualGroup": {
+    "displayName": "Qualificado",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "c2f43e3a866e5ec49ebe"
+}

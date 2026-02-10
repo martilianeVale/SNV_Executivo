@@ -1,0 +1,33 @@
+table d_TipoLead
+	lineageTag: c2f3b6d3-81b7-406e-9d3c-969d6fc2d2ae
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fe1fcea-d39e-41a9-abf5-9e25074cd4ea
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoLeadTipo
+		dataType: string
+		lineageTag: 2a3bb864-414e-4224-9609-35bbf49098ad
+		summarizeBy: none
+		sourceColumn: CodigoLeadTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_TipoLead = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT       #(lf)        [CodigoLead]#(lf)        ,[CodigoLeadTipo]              #(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_LeadStatic]#(lf)Where Date >= '20240101'"])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

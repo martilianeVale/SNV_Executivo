@@ -1,0 +1,26 @@
+table d_SelectDays
+	lineageTag: 97d6717c-29af-4cd9-a6d8-5ad1351c367e
+
+	measure 'Valor Parâmetro' = SELECTEDVALUE('d_SelectDays'[Dias])
+		formatString: 0
+		lineageTag: a0f7c54f-82b8-40e0-be63-55922054074c
+
+	column Dias
+		formatString: 0
+		lineageTag: 2ffcf57f-6aff-4f5d-8f0f-79098e57ed04
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition d_SelectDays-04659095-a58e-48ab-bd7d-b869c1bf0946 = calculated
+		mode: import
+		source = GENERATESERIES(1, 360, 1)
+
+	annotation PBI_Id = 85a6fb8a3bd143368d854a526de3eaec
+

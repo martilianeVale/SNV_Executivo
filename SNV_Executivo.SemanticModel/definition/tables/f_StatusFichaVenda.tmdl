@@ -1,0 +1,90 @@
+table f_StatusFichaVenda
+	lineageTag: 3763d33f-7b9f-4c85-b795-15c1e636ac67
+
+	column CodigoUnidade
+		dataType: int64
+		formatString: 0
+		lineageTag: 281a07f5-0d1d-4a59-8791-c0e2b89fbf66
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9b76457c-fb13-4fd3-a6fd-9219eed257f3
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: a5fe586b-674c-4571-bef4-ffdaf268523f
+		summarizeBy: sum
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodigoMidia
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ad5203f-73ca-49a7-9c9c-815ec5100a8b
+		summarizeBy: sum
+		sourceColumn: CodigoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column SituacaoAtual
+		dataType: string
+		lineageTag: f9ea82f5-019a-42c6-8bc1-91a05d316fb1
+		summarizeBy: none
+		sourceColumn: SituacaoAtual
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: fce0bb4e-3d30-4fa7-99c4-5257280bc842
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column codigofichavenda
+		dataType: int64
+		formatString: 0
+		lineageTag: af46d9bd-5e84-4c4d-91d1-b413efcb9b1b
+		summarizeBy: sum
+		sourceColumn: codigofichavenda
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataHoraCriacaoFV
+		dataType: string
+		lineageTag: f6135fad-5f35-43c1-b9a6-159803c358d1
+		summarizeBy: none
+		sourceColumn: DataHoraCriacaoFV
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_StatusFichaVenda = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT      FichaVenda.[SituacaoAtual],#(lf)#(tab)#(tab)#(tab)FichaVenda.[Status],#(lf)#(tab)#(tab)#(tab)FichaVenda.[codigofichavenda],#(lf)#(tab)#(tab)#(tab)FichaVenda.[CodigoUnidade],#(lf)#(tab)#(tab)#(tab)FichaVenda.[DataHoraCriacaoFV],#(lf)#(tab)#(tab)#(tab)FichaVenda.[Date],#(lf)#(tab)#(tab)#(tab)FichaVenda.[CodigoLead],#(lf)#(tab)#(tab)#(tab)Midia.CodigoMidia#(lf)FROM [MKT_Warehouse].[dbo].[SNV_f_FichaVenda] as FichaVenda#(lf)#(tab)LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_Vendas] as Vendas on Vendas.CodigoFichaVenda = FichaVenda.codigofichavenda#(lf)    LEFT JOIN [MKT_Warehouse].[dbo].[SNV_f_MidiaVendas] as Midia on Midia.CodigoVenda = Vendas.CodigoVenda#(lf)#(tab)#(tab)AND Midia.TipoMovimentacao = Vendas.Vendas and TipoMovimentacao = 1#(lf)WHERE FichaVenda.Date >= '20240101'"]),
+				    #"Linhas Filtradas" = Table.SelectRows(Fonte, each [CodigoUnidade] <> 1785),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Linhas Filtradas",{{"Date", type date}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

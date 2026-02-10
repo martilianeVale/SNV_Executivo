@@ -1,0 +1,51 @@
+table d_InvestimentoPlanejado
+	lineageTag: adc212b9-98d2-42d2-9e0f-d34b28655569
+
+	column Date
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: dd5753f3-42e4-41cd-a61b-ff2c788a3ec1
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Cost
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 7f12ec22-cc27-45e4-9d30-6521fe1c8ff8
+		summarizeBy: sum
+		sourceColumn: Cost
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column Origem
+		dataType: string
+		lineageTag: e8412b1d-b32b-438f-94b8-dc621aa78757
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_InvestimentoPlanejado-388bfef3-5426-46a3-9539-af23fab59a14 = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="Select #(lf)         Date#(lf)        ,Sum (Cost) as Cost#(lf)        ,Origem#(lf)From [MKT_Warehouse].[dbo].[INS_d_InvestimentoPlanejado]#(lf)Where BU='SNV'#(lf)and Date >= '20240101'#(lf)Group by  #(lf)        Date#(lf)        ,Origem#(lf)ORDER BY Date DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

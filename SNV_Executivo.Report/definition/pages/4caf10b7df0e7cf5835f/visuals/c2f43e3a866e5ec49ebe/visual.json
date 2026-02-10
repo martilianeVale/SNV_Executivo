@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "c2f43e3a866e5ec49ebe",
+  "position": {
+    "x": 770,
+    "y": 420,
+    "z": 25000,
+    "height": 260,
+    "width": 500,
+    "tabOrder": 11000
+  },
+  "visualGroup": {
+    "displayName": "etapaVersus",
+    "groupMode": "ScaleMode"
+  }
+}

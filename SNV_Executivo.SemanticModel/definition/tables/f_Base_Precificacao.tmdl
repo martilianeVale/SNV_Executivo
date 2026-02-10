@@ -1,0 +1,189 @@
+table f_Base_Precificacao
+	lineageTag: 2aeabbf9-48ba-4ded-80e8-8fc25f59261b
+
+	column DATA
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 472d9ec9-8601-4b8c-9530-3ec661ac5288
+		summarizeBy: none
+		sourceColumn: DATA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LOJA
+		dataType: string
+		lineageTag: 0e736b73-62db-4e5e-a4a9-0f7054c566f8
+		summarizeBy: none
+		sourceColumn: LOJA
+
+		annotation SummarizationSetBy = Automatic
+
+	column PLACA
+		dataType: string
+		lineageTag: 6f8d3b03-6493-4c40-a92b-91e8db6d269f
+		summarizeBy: none
+		sourceColumn: PLACA
+
+		annotation SummarizationSetBy = Automatic
+
+	column CATEGORIA
+		dataType: string
+		lineageTag: d8cf3a5f-246a-44d3-a38d-c234f1611f27
+		summarizeBy: none
+		sourceColumn: CATEGORIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODELO
+		dataType: string
+		lineageTag: e7ac4980-55f7-4f83-a0cd-55e51e59d959
+		summarizeBy: none
+		sourceColumn: MODELO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COR
+		dataType: string
+		lineageTag: aa1ddc1f-3d76-46a1-8f16-a2f6035d6247
+		summarizeBy: none
+		sourceColumn: COR
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIPE
+		dataType: string
+		lineageTag: e1ff2c8d-4f91-4a51-9dc1-d87ee1e211f7
+		summarizeBy: none
+		sourceColumn: FIPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'VALOR FIPE'
+		dataType: double
+		lineageTag: 5c30a9ed-ad56-402b-bf64-c1753205d4a5
+		summarizeBy: sum
+		sourceColumn: VALOR FIPE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KM
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b16830f-d025-47b3-a2f8-5a4c4ef3af3b
+		summarizeBy: sum
+		sourceColumn: KM
+
+		annotation SummarizationSetBy = Automatic
+
+	column TP
+		dataType: double
+		lineageTag: 2b73519a-bcea-442a-af11-09a46cc9d10c
+		summarizeBy: sum
+		sourceColumn: TP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CHAMADA
+		dataType: double
+		lineageTag: 027eb053-d23e-4417-94cf-f6aa1e21656f
+		summarizeBy: sum
+		sourceColumn: CHAMADA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MÍNIMO
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 817f514f-16a6-4fe2-892a-82f3fe280681
+		summarizeBy: sum
+		sourceColumn: MÍNIMO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column CodigoUnidade
+		dataType: int64
+		formatString: 0
+		lineageTag: bb5d4b05-ff51-4993-9de2-1c60168658fc
+		summarizeBy: none
+		sourceColumn: CodigoUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa R$'
+		dataType: string
+		lineageTag: b72c1787-9d93-4ebc-8ec6-3f7a958f4400
+		summarizeBy: none
+		sourceColumn: Faixa R$
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria_01 = ```
+			(IF(f_Base_Precificacao[CATEGORIA] = "-" || f_Base_Precificacao[CATEGORIA] = "", "Não Definido", 
+			LOOKUPVALUE(d_CategoriaSimples[Categoria Simples],d_CategoriaSimples[Categoria],f_Base_Precificacao[CATEGORIA])))
+			```
+		lineageTag: 9cef5e6b-855c-429d-95c8-3ace442acc4e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria_Simples =
+			IF(
+			    f_Base_Precificacao[Categoria_01]="",
+			    LOOKUPVALUE(z_De_Para_Modelo[Categoria],z_De_Para_Modelo[Modelo],f_Base_Precificacao[MODELO]),
+			    f_Base_Precificacao[Categoria_01]
+			)
+		lineageTag: 51c10b06-ad57-4d98-9692-67dda6239199
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChaveModelo
+		dataType: string
+		lineageTag: 793b9a83-fa94-4c15-bf86-e6b1053824b8
+		summarizeBy: none
+		sourceColumn: ChaveModelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa Preço Mínimo'
+		dataType: string
+		lineageTag: 38aeecb0-9d24-4b28-8004-d28a5811eb3a
+		summarizeBy: none
+		sourceColumn: Faixa Preço Mínimo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Base_Precificacao = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="#(lf)SELECT#(lf)    DATA#(lf)    ,Precificacao.LOJA#(lf)    ,PLACA#(lf)    ,CATEGORIA#(lf)    ,MODELO#(lf)    ,COR#(lf)    ,FIPE#(lf)    ,[VALOR FIPE]#(lf)    ,KM#(lf)    ,TP#(lf)    ,CHAMADA#(lf)    ,MÍNIMO#(lf)    ,Lojas.CodigoUnidade#(lf) #(lf)    FROM [MKT_Warehouse].[dbo].[SNV_f_Precificacao] as Precificacao#(lf)        LEFT JOIN (#(lf)        (SELECT LojaPricing, CodigoUnidade FROM [MKT_Warehouse].[dbo].[SNV_f_CodigoUnidade])#(lf)    ) as Lojas ON Lojas.LojaPricing=Precificacao.LOJA#(lf)    WHERE DATA >= '20250101' and Precificacao.LOJA <> ''"]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(Fonte,{{"VALOR FIPE", type number}, {"KM", Int64.Type}, {"TP", Int64.Type}, {"CHAMADA", type number}, {"MÍNIMO", type number}, {"DATA", type date}}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Tipo Alterado1", each ([LOJA] <> "-")),
+				    #"Linhas Filtradas2" = Table.SelectRows(#"Linhas Filtradas1", each not Text.Contains([LOJA], "DESMOB") and not Text.Contains([LOJA], "ATACADO")),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Linhas Filtradas2",{{"LOJA", Text.Proper, type text}}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Colocar Cada Palavra Em Maiúscula", "Faixa R$", each if [CHAMADA] <= 45000 then "Faixa 1 - até 45k" else if [CHAMADA] <= 65000 then "Faixa 1 - até 65k" else if [CHAMADA] <= 80000 then "Faixa 2 - entre 65k e 80k" else if [CHAMADA] > 80000 then "Faixa 3 - acima de 80k" else "Outros"),
+				    #"Coluna Condicional Adicionada2" = Table.AddColumn(#"Coluna Condicional Adicionada", "Faixa Preço Mínimo", each if  [MÍNIMO] <= 45000 then "Faixa 1 - até 45k" else if [MÍNIMO] <= 65000 then "Faixa 1 - até 65k" else if [MÍNIMO] <= 80000 then "Faixa 2 - entre 65k e 80k" else if [MÍNIMO] > 80000 then "Faixa 3 - acima de 80k" else "Outros"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Coluna Condicional Adicionada2",{{"DATA", type date}, {"MÍNIMO", type number}, {"CHAMADA", type number}, {"TP", type number}, {"KM", Int64.Type}, {"VALOR FIPE", type number}}),
+				    #"Linhas Classificadas2" = Table.Sort(#"Tipo Alterado",{{"DATA", Order.Descending}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Linhas Classificadas2","","Não Definido",Replacer.ReplaceValue,{"Faixa R$"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Valor Substituído", each [PLACA] <> null and [PLACA] <> ""),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Linhas Filtradas", "ChaveModelo", each [FIPE]&Text.Start([MODELO],8))
+				in
+				    #"Personalização Adicionada"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+

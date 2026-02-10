@@ -1,0 +1,84 @@
+table f_InvestimentoRealizado
+	lineageTag: 9fcdacc0-fe54-4ba1-820f-0a2c83593156
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9c90d148-093c-4146-a74d-b014b84c6b32
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Cost
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7c5940f7-f558-4c53-8cb5-c449fda0ab96
+		summarizeBy: sum
+		sourceColumn: Cost
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column Impressions
+		dataType: double
+		formatString: 0
+		lineageTag: cc3887e2-961d-4087-97e6-4b17e511d330
+		summarizeBy: sum
+		sourceColumn: Impressions
+
+		annotation SummarizationSetBy = Automatic
+
+	column Clicks
+		dataType: double
+		formatString: 0
+		lineageTag: c4611705-5ff7-4864-b592-9b1ad1df66b0
+		summarizeBy: sum
+		sourceColumn: Clicks
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origem
+		dataType: string
+		lineageTag: 18165974-ed62-4d2f-94ed-302114c4d587
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Objetivo
+		dataType: string
+		lineageTag: bf76d821-ce08-48b4-b1c8-63cf743039a1
+		summarizeBy: none
+		sourceColumn: Objetivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: e68a9c81-fe86-4c7a-8f72-004778383ace
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_InvestimentoRealizado-5c52b71a-d967-4f4c-8456-fc34ca3f2e85 = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="Select  [Date]#(lf)#(tab),Sum ([Clicks]) as Clicks#(lf)#(tab),Sum([Impressions]) as Impressions#(lf)#(tab),Sum([Cost]) as Cost#(lf)#(tab),[Objetivo]#(lf)#(tab),Case when [Origem] like '%Portais%' then CONCAT('snv-',Origem) else Origem end as Origem#(lf)#(tab),[Tipo]#(lf)FROM [MKT_Warehouse].[dbo].[INS_f_InvestimentoRealizado]#(lf)WHERE BU = 'SNV'#(lf)and Date>= '20240101'#(lf)AND adAccount <> 'Unidas Social'#(lf)GROUP BY [Date],[Objetivo],[Origem],[Tipo],[BU], [FullCampaignName]#(lf)ORDER BY Date DESC"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Date", type date}}),
+				    #"Linhas Classificadas" = Table.Sort(#"Tipo Alterado",{{"Date", Order.Descending}})
+				in
+				    #"Linhas Classificadas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

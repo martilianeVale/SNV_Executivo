@@ -1,0 +1,41 @@
+table d_VeículosModelos
+	lineageTag: 6e7c6e05-2e71-458d-805b-87cb3eb4bbc2
+
+	column CodigoModelo
+		dataType: int64
+		formatString: 0
+		lineageTag: 526679d0-e25f-421f-93cc-bcf657128c05
+		summarizeBy: none
+		sourceColumn: CodigoModelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Modelo
+		dataType: string
+		lineageTag: 16ed61ec-ca33-4f54-9b4c-07451697eba8
+		summarizeBy: none
+		sourceColumn: Modelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marca
+		dataType: string
+		lineageTag: 6a86f71a-c3c1-442c-807b-d6e8e0e64ee6
+		summarizeBy: none
+		sourceColumn: Marca
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_VeículosModelos = m
+		mode: import
+		queryGroup: Dimensão
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="SELECT #(lf)        CodigoModelo#(lf)        ,Modelo#(lf)        ,Marca#(lf)FROM [MKT_Warehouse].[dbo].[SNV_d_VeiculosModelos]"])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

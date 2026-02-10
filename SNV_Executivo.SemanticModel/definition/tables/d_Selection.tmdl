@@ -1,0 +1,40 @@
+table d_Selection
+	lineageTag: 3fc970b7-6666-4457-bd77-3622352a2fc2
+
+	column Selection
+		dataType: string
+		lineageTag: 849f7adf-b996-4b61-9c87-5ee0361c7a4f
+		summarizeBy: none
+		sourceColumn: Selection
+
+		annotation SummarizationSetBy = Automatic
+
+	column Option
+		dataType: string
+		lineageTag: 668079d7-0170-4380-8cb5-a3d128284f24
+		summarizeBy: none
+		sourceColumn: Option
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: string
+		lineageTag: bf2fb9c5-3c8c-4e9c-a1fc-cc0a2ef325ea
+		summarizeBy: none
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Selection = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("XY/disJADIVfJRQEZWVAq+u1FHq1LCwUb8SL0JnKQJuu9gefZV9nX8zJtMpMriY58yU553xOspZ6vJomWSdZbQ31poP/P7Jl2zlpmLTkso7InwGptxq1gaLtsXbSbSoYzAeyLG0UfBnUvKd2b/S3VeCW1LayJWp/6sZtxKQKjldDGhtnwTPIbcTsFGRt84t3U9o3Vnol4vYKTt85fMCJFzI0UhURnyr440JmCfzCcrF6WeZSJAtcz6Q3LslUep/hyb6kd3GCmXUpJLhXAuFGQi5t8eD7NMZr3x5oNPcOqAI5eghHw0OvGT9weQI=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Selection = _t, Option = _t, Value = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Selection", type text}, {"Option", type text}, {"Value", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "25e2978c22192cf83f03",
+  "position": {
+    "x": 165,
+    "y": 110,
+    "z": 4000,
+    "height": 25,
+    "width": 325,
+    "tabOrder": 41000
+  },
+  "visualGroup": {
+    "displayName": "Agendamentos",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "c2f43e3a866e5ec49ebe"
+}

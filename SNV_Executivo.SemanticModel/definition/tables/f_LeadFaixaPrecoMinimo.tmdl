@@ -1,0 +1,94 @@
+table f_LeadFaixaPrecoMinimo
+	lineageTag: 902c25d0-9396-40fe-a4ee-6bd9a483f75f
+
+	column CodigoLead
+		dataType: int64
+		formatString: 0
+		lineageTag: bf12db14-61e4-4412-8cb0-6abc3e0fe74a
+		summarizeBy: none
+		sourceColumn: CodigoLead
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mínimo
+		dataType: double
+		lineageTag: 72be9aa1-8148-4ae8-8ee5-08e78ad290e3
+		summarizeBy: sum
+		sourceColumn: Mínimo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Faixa Preço Mínimo'
+		dataType: string
+		lineageTag: d6043b2b-d452-4671-9d2b-b1ea61a74d07
+		summarizeBy: none
+		sourceColumn: Faixa Preço Mínimo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Placa
+		dataType: string
+		lineageTag: c185d46e-2f25-4b71-b69f-3c4a2138f129
+		summarizeBy: none
+		sourceColumn: Placa
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataLead
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 847f1a6e-e51d-4d61-99ba-161e5d41acc0
+		summarizeBy: none
+		sourceColumn: DataLead
+
+		variation Variation
+			isDefault
+			relationship: ba8e9b8c-9cbd-4b84-a071-ae14dc8352a0
+			defaultHierarchy: LocalDateTable_fde03d2b-af4c-4ea4-bdde-f2b83380df39.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DataMaximaPrecificacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5851564e-45ff-452a-a395-8bf524cacb6b
+		summarizeBy: none
+		sourceColumn: DataMaximaPrecificacao
+
+		variation Variation
+			isDefault
+			relationship: 8caebf95-5f27-477f-8d23-e87d14a7c548
+			defaultHierarchy: LocalDateTable_34eedf04-2c4b-4d5e-9dea-ab23e7580ea0.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rk
+		dataType: int64
+		formatString: 0
+		lineageTag: d0292c5d-79af-4e70-9abc-cf393ed727a7
+		summarizeBy: sum
+		sourceColumn: Rk
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_LeadFaixaPrecoMinimo = m
+		mode: import
+		queryGroup: Fato
+		source =
+				let
+				    Fonte = Sql.Database(MKT_Warehouse, Database, [Query="WITH DataAjustada AS (#(lf)  SELECT #(lf)     Placa.Placa as Placa#(lf)    ,Placa.CodigoLead as CodigoLead#(lf)    ,Precificacao.[MÍNIMO] as Mínimo#(lf)    ,Lead.Date as DataLead#(lf)    ,MAX(Precificacao.DATA) as DataMaximaPrecificacao#(lf)  FROM [MKT_Warehouse].[dbo].[SNV_f_LeadPlaca]  as Placa#(lf)  Left join SNV_f_LeadStatic as Lead on Lead.CodigoLead= Placa.CodigoLead#(lf)  LEFT JOIN   [MKT_Warehouse].[dbo].[SNV_f_Precificacao] as Precificacao#(lf)    ON Placa.Placa = Precificacao.[PLACA]#(lf)   AND Precificacao.DATA<= Lead.Date#(lf)  WHERE Cast (Lead.Date as date)  >= '20250101'#(lf)  ---Lead.Placa = 'SEP6J53'#(lf)  GROUP BY #(lf)     Placa.Placa#(lf)    ,Placa.CodigoLead#(lf)    ,Lead.Date#(lf)    ,Precificacao.[MÍNIMO]#(lf)) Select * from (SELECT *, Rank () Over (Partition by Placa, CodigoLead Order by DataMaximaPrecificacao desc) as Rk#(lf)FROM DataAjustada) as D where Rk = 1;"]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Mínimo", type number}}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Tipo Alterado", "Faixa Preço Mínimo", each if  [Mínimo] <= 45000 then "Faixa 1 - até 45k" else if [Mínimo] <= 65000 then "Faixa 1 - até 65k" else if [Mínimo] <= 80000 then "Faixa 2 - entre 65k e 80k" else if [Mínimo] > 80000 then "Faixa 3 - acima de 80k" else "Outros"),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Coluna Condicional Adicionada", each ([Mínimo] <> null)),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Linhas Filtradas",{{"DataLead", type date}})
+				in
+				    #"Tipo Alterado1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
